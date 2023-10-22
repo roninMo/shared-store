@@ -5,7 +5,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { isDevMode } from '@angular/core';
 import {
   USERS_FEATURE_KEY,
-  usersReducer,
+  userReducers,
   UsersEffects,
   COMMENTS_FEATURE_KEY,
   CommentsEffects,
@@ -22,7 +22,7 @@ export const appRoutes: Route[] = [
     component: HomePageComponent,
     providers: [
       provideStoreDevtools({ logOnly: !isDevMode() }),
-      provideState(USERS_FEATURE_KEY, usersReducer),
+      provideState(USERS_FEATURE_KEY, userReducers),
       provideEffects(UsersEffects),
       provideState(COMMENTS_FEATURE_KEY, commentsReducer),
       provideEffects(CommentsEffects),

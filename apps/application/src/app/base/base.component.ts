@@ -7,7 +7,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { User } from '@shared-store/utilities';
 import { Store } from '@ngrx/store';
-// import { UserActions } from '@shared-store/store';
+import { UserActions } from '@shared-store/shared-store';
 
 @Component({
   selector: 'shared-store-base',
@@ -33,7 +33,7 @@ export class BaseComponent {
     //     console.log('api response complete, user data: ', this.userData);
     //   });
 
-    // this.store.dispatch(UserActions['[UserPage]GetUser']({ userId: 1 }));
+    this.store.dispatch(UserActions['[UserPage]GetUser']({ userId: 1 }));
   }
 
   // User functions
