@@ -9,3 +9,4 @@ export * from './users/users.effects';
 export * from './users/users.models';
 export * from './users/users.reducer';
 export * from './users/users.selectors';
+export * from './api.service';

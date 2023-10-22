@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BaseComponent } from './base/base.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, BaseComponent],
+  imports: [RouterModule, BaseComponent, HttpClientModule],
   selector: 'shared-store-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

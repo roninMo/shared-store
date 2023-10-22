@@ -10,6 +10,7 @@ import {
   COMMENTS_FEATURE_KEY,
   CommentsEffects,
   commentsReducer,
+  ApiService,
 } from '@shared-store/shared-store';
 import { HomePageComponent } from './pages/HomePage/home-page.component';
 import { UsersPageComponent } from './pages/UsersPage/users-page.component';

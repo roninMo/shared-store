@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { User } from '@shared-store/utilities';
 import { Store } from '@ngrx/store';
 import { UserActions } from '@shared-store/shared-store';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'shared-store-base',
@@ -16,6 +17,7 @@ import { UserActions } from '@shared-store/shared-store';
   styleUrls: ['./base.component.scss'],
   imports: [
     CommonModule,
+    HttpClientModule,
     RouterModule,
     SidebarComponent,
     TableOfContentsComponent,
