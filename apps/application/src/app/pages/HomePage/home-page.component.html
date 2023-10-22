@@ -1,0 +1,336 @@
+<div class="flex-auto">
+  <!-- Get a user's information -->
+  <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
+      Introduction
+    </h1>
+
+    <p class="mt-4 mb-16 text-md text-slate-400">
+      This let's you access and edit a user's form without having to handle the api. It also updates the state on our own backend while you update this information.
+      There's a million things you can do with this, and you should start by challenging yourself. Take your space, and figure it out
+    </p>
+
+
+    <div class="mx-auto max-w-3xl py-16">
+      <h1 class="my-4 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
+        User Form
+      </h1>
+
+      <shared-store-user-form 
+        [userForm]="userForm"
+      />
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
+      Access a User's Information
+    </h1>
+    <shared-store-user-information></shared-store-user-information>
+  </div>
+
+
+  <!-- Create a Post -->
+  <!-- 
+    userId
+    title
+    body
+  -->
+  <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
+    <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
+      Create a Post
+    </h1>
+    <h2 class="mt-4 text-base font-semibold leading-7 text-white">Personal Information</h2>
+    <p class="mt-1 mb-12 text-sm leading-6 text-gray-400">Edit and configure a User's information publicly</p>
+
+    <div class="border-b border-white/10 pb-12 space-y-8">
+      <div class="sm:col-span-4">
+        <label for="username" class="block text-sm font-medium leading-6 text-white">Username</label>
+        <div class="mt-2">
+          <div class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+            <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
+            <input type="text" name="username" id="username" autocomplete="username" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-full">
+        <label for="about" class="block text-sm font-medium leading-6 text-white">About</label>
+        <div class="mt-2">
+          <textarea id="about" name="about" rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
+        </div>
+        <p class="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about yourself.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Add a Comment -->
+  <!-- 
+    postId
+    name
+    email
+    body
+  -->
+  <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
+    <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
+      Add a Comment
+    </h1>
+    <h2 class="mt-4 text-base font-semibold leading-7 text-white">Personal Information</h2>
+    <p class="mt-1 mb-12 text-sm leading-6 text-gray-400">Add a comment to a post</p>
+
+
+    <div class="border-b border-white/10 pb-12 space-y-8">
+      <div class="sm:col-span-4">
+        <label for="username" class="block text-sm font-medium leading-6 text-white">Username</label>
+        <div class="mt-2">
+          <div class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+            <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
+            <input type="text" name="username" id="username-1" autocomplete="username" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-full">
+        <label for="about" class="block text-sm font-medium leading-6 text-white">About</label>
+        <div class="mt-2">
+          <textarea id="about-1" name="about" rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Create a Todo -->
+  <!-- 
+    userId
+    title
+    completed
+  -->
+  <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
+    <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
+      Create a Todo
+    </h1>
+    <h2 class="mt-4 text-base font-semibold leading-7 text-slate-200">Todo</h2>
+    <p class="mt-1 mb-12 text-sm leading-6 text-gray-400">Create a todo here</p>
+
+
+    <div class="border-b border-white/10 pb-12 space-y-8">
+      <div class="sm:col-span-4">
+        <label for="username" class="block text-sm font-medium leading-6 text-slate-200">Username</label>
+        <div class="mt-2">
+          <div class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+            <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
+            <input type="text" name="username" id="username-2" autocomplete="username" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-200 focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-full">
+        <label for="about" class="block text-sm font-medium leading-6 text-slate-200">About</label>
+        <div class="mt-2">
+          <textarea id="about-2" name="about" rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-slate-200 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
+        </div>
+
+        <div class="mt-10 space-y-10">
+          <fieldset>
+            <legend class="text-sm font-semibold leading-6 text-slate-200">Have you already completed the todo?</legend>
+            <div class="mt-4">
+              <div class="relative flex gap-x-3">
+                <div class="flex h-6 items-center">
+                  <input id="comments" name="comments" type="checkbox" class="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900">
+                </div>
+
+                <div class="text-sm leading-6">
+                  <label for="comments" class="font-medium text-slate-200">Completed</label>
+                  <p class="text-gray-400">This todo has already been completed.</p>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Starter content to figure out the responsive design -->
+  <div class="px-6 py-14 lg:px-8">
+    <div class="mx-auto max-w-3xl text-base leading-7 text-gray-400">
+      <p class="text-base font-semibold leading-7 text-indigo-400">
+        Introducing
+      </p>
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
+        Html for Beginners
+      </h1>
+
+      <p class="mt-6 text-xl leading-8">
+        Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At
+        arcu, sit dui mi, nibh dui, diam eget aliquam. Quisque id at vitae
+        feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget.
+        Eleifend egestas fringilla sapien.
+      </p>
+      
+      <div class="mt-10 max-w-2xl">
+        <p>
+          Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus
+          enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor
+          praesent donec est. Odio penatibus risus viverra tellus varius sit
+          neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim
+          sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis
+          id.
+        </p>
+
+        <ul role="list" class="mt-8 max-w-xl space-y-8 text-gray-400">
+          <li class="flex gap-x-3">
+            <svg class="mt-1 h-5 w-5 flex-none text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"/>
+            </svg>
+            <span>
+              <strong class="font-semibold text-slate-200">Data types.</strong>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
+              impedit perferendis suscipit eaque, iste dolor cupiditate
+              blanditiis ratione.</span>
+          </li>
+
+          <li class="flex gap-x-3">
+            <svg class="mt-1 h-5 w-5 flex-none text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" />
+            </svg>
+            <span>
+              <strong class="font-semibold text-slate-200">Loops.</strong> Anim
+              aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem
+              cupidatat commodo.</span>
+          </li>
+
+          <li class="flex gap-x-3">
+            <svg class="mt-1 h-5 w-5 flex-none text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" />
+            </svg>
+            <span>
+              <strong class="font-semibold text-slate-200">Events.</strong> Ac
+              tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et
+              magna sit morbi lobortis.</span>
+          </li>
+        </ul>
+
+        
+        <p class="mt-8">
+          Et vitae blandit facilisi magna lacus commodo. Vitae sapien duis odio
+          id et. Id blandit molestie auctor fermentum dignissim. Lacus diam
+          tincidunt ac cursus in vel. Mauris varius vulputate et ultrices hac
+          adipiscing egestas. Iaculis convallis ac tempor et ut. Ac lorem vel
+          integer orci.
+        </p>
+
+        <!-- Second section -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-slate-200">
+          From beginner to expert in 3 hours
+        </h2>
+
+        <p class="mt-6">
+          Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam consequat
+          in. Convallis arcu ipsum urna nibh. Pharetra, euismod vitae interdum
+          mauris enim, consequat vulputate nibh. Maecenas pellentesque id sed
+          tellus mauris, ultrices mauris. Tincidunt enim cursus ridiculus mi.
+          Pellentesque nam sed nullam sed diam turpis ipsum eu a sed convallis
+          diam.
+        </p>
+
+        <figure class="mt-10 border-l border-blue-500 pl-9">
+          <blockquote class="font-semibold text-gray-500">
+            <p>
+              “Vel ultricies morbi odio facilisi ultrices accumsan donec lacus
+              purus. Lectus nibh ullamcorper ac dictum justo in euismod. Risus
+              aenean ut elit massa. In amet aliquet eget cras. Sem volutpat enim
+              tristique.”
+            </p>
+          </blockquote>
+
+          <figcaption class="mt-6 flex gap-x-4">
+            <!-- <img class="h-6 w-6 flex-none rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
+            <div class="text-sm leading-6">
+              <strong class="font-semibold text-gray-300">Maria Hill</strong> –
+              Marketing Manager
+            </div>
+          </figcaption>
+        </figure>
+
+        <p class="mt-10">
+          Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus
+          enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor
+          praesent donec est. Odio penatibus risus viverra tellus varius sit
+          neque erat velit.
+        </p>
+      </div>
+
+      <figure class="mt-16">
+        <!-- <img class="aspect-video rounded-xl bg-gray-50 object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&w=1310&h=873&q=80&facepad=3" alt=""> -->
+        <figcaption class="mt-4 flex gap-x-2 text-sm leading-6 text-gray-400">
+          <svg class="mt-0.5 h-5 w-5 flex-none text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" />
+          </svg>
+          Faucibus commodo massa rhoncus, volutpat.
+        </figcaption>
+      </figure>
+
+      <!-- Third section -->
+      <div class="mt-16 max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-slate-200">
+          Everything you need to get up and running
+        </h2>
+
+        <p class="mt-6">
+          Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam
+          varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales
+          cursus tristique. Tincidunt sed tempus ut viverra ridiculus non
+          molestie. Gravida quis fringilla amet eget dui tempor dignissim.
+          Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum
+          convallis quam.
+        </p>
+
+        <p class="mt-8">
+          Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus
+          enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor
+          praesent donec est. Odio penatibus risus viverra tellus varius sit
+          neque erat velit.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users -->
+  <div class="mx-auto max-w-3xl mt-24 text-base leading-7 text-gray-400">
+    <p class="text-base font-semibold leading-7 text-indigo-400">
+      Next up
+    </p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
+      Handling User Information
+    </h1>
+    <!-- <shared-store-users-page></shared-store-users-page> -->
+  </div>
+</div>

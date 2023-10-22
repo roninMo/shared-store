@@ -1,0 +1,81 @@
+<div class="border-b border-white/10 pb-12">
+  <h2 class="mt-6 text-base font-semibold leading-7 text-white">Personal Information</h2>
+  <p class="mt-1 text-sm leading-6 text-gray-400">Edit and configure a User's information publicly.</p>
+
+  <!-- User form -->
+  <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+    <!-- First name -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.name"
+        label="First name"
+      />
+    </div>
+
+    <!-- Email address -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.email"
+        label="Email address"
+      />
+    </div>
+
+      <!-- Country -->
+    <div class="sm:col-span-5">
+      <shared-store-select
+        [control]="userForm.controls.address.controls.country"
+        [OmitBlankOption]="true"
+        [options]="countries"
+        label="Country"
+      />
+    </div>
+
+    <!-- Street address -->
+    <div class="col-span-full">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.street"
+        label="Street address"
+      />
+    </div>
+
+    <!-- Suite -->
+    <div class="sm:col-span-4 sm:col-start-1">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.suite"
+        label="Suite"
+      />
+    </div>
+
+    <!-- City -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.city"
+        label="City"
+      />
+    </div>
+
+    <!-- Postal code -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.zipcode"
+        label="ZIP / Postal code"
+      />
+    </div>
+    
+    <!-- Geo -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.geo"
+        label="Geo"
+      />
+    </div>
+  </div>
+  
+  <!-- Create User -->
+  <div class="mt-14 flex items-center justify-end gap-x-6">
+    <shared-store-button
+      [OnClick]="onCreateUser"
+      label="Create User"
+    />
+  </div>
+</div>
