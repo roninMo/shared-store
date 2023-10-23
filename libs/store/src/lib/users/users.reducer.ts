@@ -27,8 +27,8 @@ const defaultStateProps = { isLoading: false, error: null };
 export const userReducers = createReducer(
   [],
 
-  on(UserActions['[UserPage]GetUser'], (state) => {
-    console.log('get user: ', { state });
+  on(UserActions['[UserPage]GetUser'], (state, action) => {
+    console.log(`get user[${action.userId}]: `, { state, action });
     return { ...state, ...defaultStateProps, isLoading: true };
   }),
 

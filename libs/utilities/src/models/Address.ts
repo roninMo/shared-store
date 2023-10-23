@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 export interface Address {
   street: string;
@@ -17,5 +17,20 @@ export interface AddressForm {
   city: FormControl<string>;
   zipcode: FormControl<string>;
   country: FormControl<string>;
-  geo: FormControl<string>;
+  geo: FormGroup<{ lat: FormControl<string>; lng: FormControl<string> }>;
 }
+
+export const generateAddress = (data: Partial<Address> = {}): Address => {
+  const address = {
+    street: '3441 Kulas Light',
+    suite: 'Apt. 556 ',
+    city: 'Gwenborough',
+    zipcode: '92998-3874',
+    geo: {
+      lat: '',
+      lng: '',
+    },
+  };
+
+  return Object.assign(address, data);
+};

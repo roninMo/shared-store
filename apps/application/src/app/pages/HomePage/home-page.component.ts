@@ -55,17 +55,28 @@ export class HomePageComponent {
         city: new FormControl(),
         zipcode: new FormControl(),
         country: new FormControl(),
-        geo: new FormControl(),
+        geo: new FormGroup({
+          lat: new FormControl(),
+          lng: new FormControl(),
+        }),
       },
       formGroupOptions
     );
 
     this.userForm = this.fb.group<UserForm>(
       {
+        id: new FormControl(),
         name: new FormControl(),
         username: new FormControl(),
         email: new FormControl(),
         address: addressGroup,
+        phone: new FormControl(),
+        website: new FormControl(),
+        company: new FormGroup({
+          name: new FormControl(),
+          catchPhrase: new FormControl(),
+          bs: new FormControl(),
+        }),
       },
       formGroupOptions
     );

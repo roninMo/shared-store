@@ -15,7 +15,8 @@ export class SelectComponent {
   @Input() OmitBlankOption = false;
   @Input() options: string[] = ['None'];
 
-  protected onValueChange(value: Event): void {
-    this.control.setValue(value);
+  protected onValueChange(value: any): void {
+    console.log('on value change: ', { value, control: this.control });
+    this.control.setValue(value?.target?.value || '');
   }
 }

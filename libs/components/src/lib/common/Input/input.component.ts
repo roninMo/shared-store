@@ -11,5 +11,6 @@ import { CommonModule } from '@angular/common';
 })
 export class InputComponent {
   @Input() control: FormControl = new FormControl('');
+  @Input() autocomplete = '';
   @Input() label = '';
 }

@@ -6,6 +6,7 @@ import {
   ButtonComponent,
   InputComponent,
   SelectComponent,
+  TextareaComponent,
 } from '@shared-store/components';
 
 @Component({
@@ -13,7 +14,13 @@ import {
   standalone: true,
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
-  imports: [CommonModule, SelectComponent, InputComponent, ButtonComponent],
+  imports: [
+    CommonModule,
+    SelectComponent,
+    TextareaComponent,
+    InputComponent,
+    ButtonComponent,
+  ],
 })
 export class UserFormComponent implements OnInit {
   @Input() userForm!: FormGroup<UserForm>;

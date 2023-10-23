@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { provideStore, provideState } from '@ngrx/store';
+import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { isDevMode } from '@angular/core';
@@ -10,7 +10,6 @@ import {
   COMMENTS_FEATURE_KEY,
   CommentsEffects,
   commentsReducer,
-  ApiService,
 } from '@shared-store/shared-store';
 import { HomePageComponent } from './pages/HomePage/home-page.component';
 import { UsersPageComponent } from './pages/UsersPage/users-page.component';
