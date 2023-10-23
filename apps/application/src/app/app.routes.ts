@@ -28,7 +28,17 @@ export const appRoutes: Route[] = [
       provideEffects(CommentsEffects),
     ],
   },
-  { path: 'users', component: UsersPageComponent },
+  {
+    path: 'users',
+    component: UsersPageComponent,
+    providers: [
+      provideStoreDevtools({ logOnly: !isDevMode() }),
+      provideState(USERS_FEATURE_KEY, userReducers),
+      provideEffects(UsersEffects),
+      provideState(COMMENTS_FEATURE_KEY, commentsReducer),
+      provideEffects(CommentsEffects),
+    ],
+  },
 
   // Redirects
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`

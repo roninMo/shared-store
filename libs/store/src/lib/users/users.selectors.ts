@@ -30,5 +30,5 @@ export const selectUsersEntities = createSelector(
 export const selectSelectedUser = createSelector(
   selectUsersState,
   selectUsersEntities,
-  (state: UsersState) => state.entities[state.selectedId!] || null
+  (state: UsersState) => state?.entities[state.selectedId!] || null
 );

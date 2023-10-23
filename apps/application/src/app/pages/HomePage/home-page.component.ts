@@ -23,11 +23,11 @@ import { UserFormComponent } from '../UsersPage/UserForm/user-form.component';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
-  selectAllUsers,
   selectSelectedUser,
   selectUsersEntities,
 } from '@shared-store/shared-store';
 import { Dictionary } from '@ngrx/entity';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'shared-store-home-page',
@@ -54,7 +54,7 @@ export class HomePageComponent {
   constructor(protected fb: FormBuilder, protected store: Store) {
     this.createUserForm();
     console.log('user form: ', this.userForm);
-    this.users = store.select(selectUsersEntities);
+    this.users = store.select(selectUsersEntities).pipe(takeUntilDestroyed());
     this.user = store.select(selectSelectedUser) as Observable<User>;
   }
 
@@ -100,13 +100,16 @@ export class HomePageComponent {
   }
 
   protected printUsers(): void {
-    console.log('users selector: ', this.users);
-
-    this.users.subscribe((usersInformation) => {
-      console.log('all users: ', usersInformation);
-    });
-    this.user?.subscribe((userInformation) => {
-      console.log('current user: ', userInformation);
-    });
+    console.log('\nusers selector: ', this.users);
+    this.users
+      .subscribe((usersInformation) => {
+        console.log('all users: ', usersInformation);
+      })
+      .unsubscribe();
+    this.user
+      ?.subscribe((userInformation) => {
+        console.log('current user: ', userInformation);
+      })
+      .unsubscribe();
   }
 }

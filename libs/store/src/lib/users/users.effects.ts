@@ -10,7 +10,7 @@ export class UsersEffects {
   private actions$ = inject(Actions);
   private http = inject(ApiService);
 
-  init$ = createEffect(() =>
+  getUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions['[UserPage]GetUser']),
       concatMap((event) => {
@@ -20,15 +20,12 @@ export class UsersEffects {
             tap((data) => console.log('\n\nincoming getUser api data: ', data)),
             map((user) => {
               console.log('get user effect api call: ', user);
-
-              // Return api success action
               return UserActions['[UserPage]GetUserSuccess']({
                 user: user,
               });
             }),
             catchError((error) => {
-              console.log('get user effect api error: ', error);
-
+              console.log('get user api error: ', error);
               return of(UserActions['[UserPage]GetUserFailure']({ error }));
             })
           );
@@ -36,6 +33,72 @@ export class UsersEffects {
         // return of(
         //   UserActions['[UserPage]GetUserSuccess']({ user: {} as User })
         // );
+      })
+    )
+  );
+
+  addUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions['[UserPage]AddUser']),
+      concatMap((event) => {
+        return this.http
+          .post<User>(`${jsonApiRoute_Base}/users`, event.user)
+          .pipe(
+            // tap((data) => console.log('\n\nincoming addUser api data: ', data)),
+            map((user) => {
+              console.log('add user effect api call: ', user);
+              return UserActions['[UserPage]AddUserSuccess']({
+                user: user,
+              });
+            }),
+            catchError((error) => {
+              console.log('add user api error: ', error);
+
+              return of(UserActions['[UserPage]AddUserFailure']({ error }));
+            })
+          );
+      })
+    )
+  );
+
+  deleteUser$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(UserActions['[UserPage]DeleteUser']),
+      concatMap((event) => {
+        return this.http
+          .delete(`${jsonApiRoute_Base}/users/${event.userId}`)
+          .pipe(
+            map((user) => {
+              console.log('delete user effect api call: ', user);
+              return UserActions['[UserPage]DeleteUserSuccess']({
+                userId: event.userId,
+              });
+            }),
+            catchError((error) => {
+              console.log('delete user api error: ', error);
+              return of(UserActions['[UserPage]DeleteUserFailure']({ error }));
+            })
+          );
+      })
+    )
+  );
+
+  updateUser$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(UserActions['[UserPage]UpdateUser']),
+      concatMap((event) => {
+        return this.http
+          .put<User>(`${jsonApiRoute_Base}/users/${event.user.id}`, event.user)
+          .pipe(
+            map((user) => {
+              console.log('update user effect api call', user);
+              return UserActions['[UserPage]UpdateUserSuccess']({ user });
+            }),
+            catchError((error) => {
+              console.log('update user api error: ', error);
+              return of(UserActions['[UserPage]UpdateUserFailure']({ error }));
+            })
+          )
       })
     )
   );

@@ -4,17 +4,25 @@ import { User } from '@shared-store/utilities';
 export const UserActions = createActionGroup({
   source: 'Users',
   events: {
+    // Get
     '[User Page] Get User': props<{ userId: number }>(),
     '[User Page] Get User Success': props<{ user: User }>(),
     '[User Page] Get User Failure': props<{ error: string }>(),
 
-    '[User Page] Add User': props<{ selectedUserId: number }>(),
-    // add success action based on effect
-    // add failure action based on effect (clearing state)
+    // Add
+    '[User Page] Add User': props<{ user: User }>(),
+    '[User Page] Add User Success': props<{ user: User }>(),
+    '[User Page] Add User Failure': props<{ error: string }>(),
 
-    '[User Page] Update User': props<{ selectedUserId: number }>(),
-    // update success action based on effect
-    // update failure action based on effect (clearing state)
+    // Delete
+    '[User Page] Delete User': props<{ userId: number }>(),
+    '[User Page] Delete User Success': props<{ userId: number }>(),
+    '[User Page] Delete User Failure': props<{ error: string }>(),
+
+    // Update
+    '[User Page] Update User': props<{ user: User }>(),
+    '[User Page] Update User Success': props<{ user: User }>(),
+    '[User Page] Update User Failure': props<{ error: string }>(),
   },
 });
 

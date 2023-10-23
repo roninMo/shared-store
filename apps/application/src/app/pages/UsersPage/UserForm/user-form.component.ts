@@ -24,18 +24,22 @@ import {
 })
 export class UserFormComponent implements OnInit {
   @Input() userForm!: FormGroup<UserForm>;
+  @Input() onUserCreated: (() => void) | undefined;
   countries: string[] = Countries;
 
   ngOnInit(): void {
     if (this.userForm) {
-      console.log(
-        'the user form component has been successfully initialized and the form has been passed down: ',
-        this.userForm
-      );
+      // console.log(
+      //   'the user form component has been successfully initialized and the form has been passed down: ',
+      //   this.userForm
+      // );
     }
   }
 
-  protected onCreateUser(): void {
-    console.log('created a user!', this.userForm);
+  protected createUser(): void {
+    console.log('user form -> created a user!', this.userForm);
+    if (this.onUserCreated) {
+      this.onUserCreated();
+    }
   }
 }

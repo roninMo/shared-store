@@ -8,13 +8,13 @@
       This let's you access and edit a user's form without having to handle the api. It also updates the state on our own backend while you update this information.
     </p>
 
+    <!-- Get User information -->
     <h1 id="user-information" class="mt-24 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
       Access a User's Information
     </h1>
     <shared-store-user-information 
       [user]="user | async"
     />
-    <!-- [user]="" -->
 
     <button 
       (click)="printUsers()"
