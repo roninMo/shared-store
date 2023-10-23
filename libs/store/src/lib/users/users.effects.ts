@@ -21,7 +21,7 @@ export class UsersEffects {
 
             // Return api success action
             return UserActions['[UserPage]GetUserSuccess']({
-              user: {} as User,
+              user: user,
             });
           }),
           catchError((error) => {

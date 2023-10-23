@@ -1,8 +1,11 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
-
-import * as CommentsActions from './comments.actions';
-import { CommentsEntity } from './comments.models';
+import {
+  CommentsEntity,
+  initComments,
+  loadCommentsFailure,
+  loadCommentsSuccess,
+} from './comments.actions';
 
 export const COMMENTS_FEATURE_KEY = 'comments';
 
@@ -27,15 +30,15 @@ export const initialCommentsState: CommentsState =
 
 const reducer = createReducer(
   initialCommentsState,
-  on(CommentsActions.initComments, (state) => ({
+  on(initComments, (state) => ({
     ...state,
     loaded: false,
     error: null,
   })),
-  on(CommentsActions.loadCommentsSuccess, (state, { comments }) =>
+  on(loadCommentsSuccess, (state, { comments }) =>
     commentsAdapter.setAll(comments, { ...state, loaded: true })
   ),
-  on(CommentsActions.loadCommentsFailure, (state, { error }) => ({
+  on(loadCommentsFailure, (state, { error }) => ({
     ...state,
     error,
   }))

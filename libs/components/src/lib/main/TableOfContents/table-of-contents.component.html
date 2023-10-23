@@ -6,31 +6,12 @@
     </p>
   </li>
 
-  <li class="relative flex row gap-0 pl-4 hover:cursor-pointer">
-    <svg width="3" height="24" viewBox="0 -9 3 24" class="mr-2 text-slate-300 overflow-visible hover:text-slate-300"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
-    <p class="flex-auto py-0.5 text-sm leading-5 text-slate-400 hover:text-blue-500">
-      Intro to the Nx Library
-    </p>
-  </li>
-
-  <li class="relative flex row gap-0 pl-4 hover:cursor-pointer">
-    <svg width="3" height="24" viewBox="0 -9 3 24" class="mr-2 text-slate-300 overflow-visible hover:text-slate-300"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
-    <p class="flex-auto py-0.5 text-sm leading-5 text-slate-400 hover:text-blue-500">
-      Adding Input and Data Transformations
-    </p>
-  </li>
-
-  <li class="relative flex row gap-0 pl-4 hover:cursor-pointer">
-    <svg width="3" height="24" viewBox="0 -9 3 24" class="mr-2 text-slate-300 overflow-visible hover:text-slate-300"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
-    <p class="flex-auto py-0.5 text-sm leading-5 text-slate-400 hover:text-blue-500">
-      Content
-    </p>
-  </li>
-  
-  <li class="relative flex row gap-0 pl-4 hover:cursor-pointer">
-    <svg width="3" height="24" viewBox="0 -9 3 24" class="mr-2 text-slate-300 overflow-visible hover:text-slate-300"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
-    <p class="flex-auto py-0.5 text-sm leading-5 text-slate-400 hover:text-blue-500">
-      Applying Multiple Programming Patterns
-    </p>
+  <li *ngFor="let nav of navLinks" class="relative flex row gap-0 pl-4 hover:cursor-pointer">
+    <a [routerLink]="currentRoute + '#' + nav.ref" class="flex">
+      <svg width="3" height="24" viewBox="0 -9 3 24" class="mr-2 text-slate-300 overflow-visible hover:text-slate-300"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+      <p class="flex-auto py-0.5 text-sm leading-5 text-slate-400 hover:text-blue-500">
+        {{ nav.description }}
+      </p>
+    </a>
   </li>
 </ul>

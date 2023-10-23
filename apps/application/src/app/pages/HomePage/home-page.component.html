@@ -1,7 +1,6 @@
 <div class="flex-auto">
-  <!-- Get a user's information -->
   <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
-    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
+    <h1 id="introduction" class="mt-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
       Introduction
     </h1>
 
@@ -9,41 +8,24 @@
       This let's you access and edit a user's form without having to handle the api. It also updates the state on our own backend while you update this information.
     </p>
 
-
-    <div class="mx-auto max-w-3xl py-16">
+    <h1 id="user-information" class="mt-24 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
+      Access a User's Information
+    </h1>
+    <shared-store-user-information 
+    />
+    <!-- [user]="" -->
+    
+    <div id="user-form" class="mx-auto max-w-3xl py-16">
       <h1 class="my-4 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
         User Form
       </h1>
-
+      
       <shared-store-user-form 
         [userForm]="userForm"
-      />
-    </div>
+        />
+      </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
-      Access a User's Information
-    </h1>
-    <shared-store-user-information
-    />
-    <!-- [user]="this.userForm.value" -->
   </div>
-
 
   <!-- Create a Post -->
   <!-- 
@@ -51,7 +33,7 @@
     title
     body
   -->
-  <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
+  <div id="information" class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
     <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
       Create a Post
     </h1>

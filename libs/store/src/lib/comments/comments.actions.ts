@@ -1,5 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { CommentsEntity } from './comments.models';
+
+/**
+ * Interface for the 'Comments' data
+ */
+export interface CommentsEntity {
+  id: string | number; // Primary ID
+  name: string;
+}
 
 export const initComments = createAction('[Comments Page] Init');
 
