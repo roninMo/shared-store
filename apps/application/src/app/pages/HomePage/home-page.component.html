@@ -12,9 +12,19 @@
       Access a User's Information
     </h1>
     <shared-store-user-information 
+      [user]="user | async"
     />
     <!-- [user]="" -->
-    
+
+    <button 
+      (click)="printUsers()"
+      type="submit" 
+      class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+    >
+      get users
+    </button>
+
     <div id="user-form" class="mx-auto max-w-3xl py-16">
       <h1 class="my-4 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
         User Form

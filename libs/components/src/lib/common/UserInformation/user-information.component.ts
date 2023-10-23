@@ -10,9 +10,19 @@ import { AddressPipe, User, generateUser } from '@shared-store/utilities';
   styleUrls: ['./user-information.component.scss'],
 })
 export class UserInformationComponent {
-  @Input() user: User;
+  protected userInformation: User;
+
+  @Input()
+  public get user(): User {
+    return this.userInformation;
+  }
+  public set user(user: User | null) {
+    if (user) {
+      this.userInformation = user;
+    }
+  }
 
   constructor() {
-    this.user = generateUser();
+    this.userInformation = generateUser();
   }
 }

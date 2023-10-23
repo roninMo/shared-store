@@ -6,7 +6,12 @@ import {
   SelectComponent,
   ButtonComponent,
 } from '@shared-store/components';
-import { AddressForm, Countries, UserForm } from '@shared-store/utilities';
+import {
+  AddressForm,
+  Countries,
+  User,
+  UserForm,
+} from '@shared-store/utilities';
 import { UsersPageComponent } from '../UsersPage/users-page.component';
 import {
   AbstractControlOptions,
@@ -15,6 +20,14 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { UserFormComponent } from '../UsersPage/UserForm/user-form.component';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  selectAllUsers,
+  selectSelectedUser,
+  selectUsersEntities,
+} from '@shared-store/shared-store';
+import { Dictionary } from '@ngrx/entity';
 
 @Component({
   selector: 'shared-store-home-page',
@@ -33,12 +46,16 @@ import { UserFormComponent } from '../UsersPage/UserForm/user-form.component';
 })
 export class HomePageComponent {
   // TODO: Let's create the form with a good class implementation to initialize each of the forms
-  userForm!: FormGroup<UserForm>;
   countries: string[] = Countries;
+  userForm!: FormGroup<UserForm>;
+  users: Observable<Dictionary<User>>;
+  user: Observable<User> | null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(protected fb: FormBuilder, protected store: Store) {
     this.createUserForm();
     console.log('user form: ', this.userForm);
+    this.users = store.select(selectUsersEntities);
+    this.user = store.select(selectSelectedUser) as Observable<User>;
   }
 
   protected createUserForm(): void {
@@ -80,5 +97,16 @@ export class HomePageComponent {
       },
       formGroupOptions
     );
+  }
+
+  protected printUsers(): void {
+    console.log('users selector: ', this.users);
+
+    this.users.subscribe((usersInformation) => {
+      console.log('all users: ', usersInformation);
+    });
+    this.user?.subscribe((userInformation) => {
+      console.log('current user: ', userInformation);
+    });
   }
 }

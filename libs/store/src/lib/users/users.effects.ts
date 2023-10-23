@@ -13,23 +13,25 @@ export class UsersEffects {
   init$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions['[UserPage]GetUser']),
-      concatMap(() => {
-        return this.http.get<User>(`${jsonApiRoute_Base}/users/1`).pipe(
-          tap((data) => console.log('\n\nincoming getUser api data: ', data)),
-          map((user) => {
-            console.log('get user effect api call: ', user);
+      concatMap((event) => {
+        return this.http
+          .get<User>(`${jsonApiRoute_Base}/users/${event.userId}`)
+          .pipe(
+            tap((data) => console.log('\n\nincoming getUser api data: ', data)),
+            map((user) => {
+              console.log('get user effect api call: ', user);
 
-            // Return api success action
-            return UserActions['[UserPage]GetUserSuccess']({
-              user: user,
-            });
-          }),
-          catchError((error) => {
-            console.log('get user effect api error: ', error);
+              // Return api success action
+              return UserActions['[UserPage]GetUserSuccess']({
+                user: user,
+              });
+            }),
+            catchError((error) => {
+              console.log('get user effect api error: ', error);
 
-            return of(UserActions['[UserPage]GetUserFailure']({ error }));
-          })
-        );
+              return of(UserActions['[UserPage]GetUserFailure']({ error }));
+            })
+          );
 
         // return of(
         //   UserActions['[UserPage]GetUserSuccess']({ user: {} as User })

@@ -1,14 +1,6 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { User } from '@shared-store/utilities';
 
-/**
- * Interface for the 'Users' data
- */
-export interface UsersEntity {
-  id: string | number; // Primary ID
-  name: string;
-}
-
 export const UserActions = createActionGroup({
   source: 'Users',
   events: {

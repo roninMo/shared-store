@@ -26,3 +26,9 @@ export const selectUsersEntities = createSelector(
   selectUsersState,
   (state: UsersState) => selectEntities(state)
 );
+
+export const selectSelectedUser = createSelector(
+  selectUsersState,
+  selectUsersEntities,
+  (state: UsersState) => state.entities[state.selectedId!] || null
+);
