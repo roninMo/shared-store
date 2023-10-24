@@ -9,7 +9,10 @@ import {
   UsersEffects,
   COMMENTS_FEATURE_KEY,
   CommentsEffects,
-  commentsReducer,
+  commentReducers,
+  POSTS_FEATURE_KEY,
+  postsReducers,
+  PostsEffects,
 } from '@shared-store/shared-store';
 import { HomePageComponent } from './pages/HomePage/home-page.component';
 import { UsersPageComponent } from './pages/UsersPage/users-page.component';
@@ -22,9 +25,17 @@ export const appRoutes: Route[] = [
     component: HomePageComponent,
     providers: [
       provideStoreDevtools({ logOnly: !isDevMode() }),
+
+      // Users
       provideState(USERS_FEATURE_KEY, userReducers),
       provideEffects(UsersEffects),
-      provideState(COMMENTS_FEATURE_KEY, commentsReducer),
+
+      // Posts
+      provideState(POSTS_FEATURE_KEY, postsReducers),
+      provideEffects(PostsEffects),
+
+      // Comments
+      provideState(COMMENTS_FEATURE_KEY, commentReducers),
       provideEffects(CommentsEffects),
     ],
   },
@@ -33,15 +44,23 @@ export const appRoutes: Route[] = [
     component: UsersPageComponent,
     providers: [
       provideStoreDevtools({ logOnly: !isDevMode() }),
+      
+      // Users
       provideState(USERS_FEATURE_KEY, userReducers),
       provideEffects(UsersEffects),
-      provideState(COMMENTS_FEATURE_KEY, commentsReducer),
+
+      // Posts
+      provideState(POSTS_FEATURE_KEY, postsReducers),
+      provideEffects(PostsEffects),
+
+      // Comments
+      provideState(COMMENTS_FEATURE_KEY, commentReducers),
       provideEffects(CommentsEffects),
-    ],
+    ]
   },
 
   // Redirects
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`
+  // { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`
   { path: 'user', redirectTo: '/users', pathMatch: 'full' }, // redirect to `first-component`
   // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
   { path: '**', component: HomePageComponent }, // Wildcard route for a 404 page

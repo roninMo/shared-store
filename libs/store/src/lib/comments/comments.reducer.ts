@@ -1,11 +1,9 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
-import {
-  initComments,
-  loadCommentsFailure,
-  loadCommentsSuccess,
-} from './comments.actions';
+
 import { Comment } from '@shared-store/utilities';
+import { CommentsActions } from './comments.actions';
+import { UserActions } from '../users';
 
 // Comments state
 export const COMMENTS_FEATURE_KEY = 'comments';
@@ -19,11 +17,11 @@ export interface CommentsPartialState {
   readonly [COMMENTS_FEATURE_KEY]: CommentsState;
 }
 
-export function selectCommentId(comment: Comment): string {
+function selectCommentId(comment: Comment): string {
   return comment.id.toString();
 }
 
-export function sortByName(a: Comment, b: Comment): number {
+function sortByName(a: Comment, b: Comment): number {
   return a.name.localeCompare(b.name);
 }
 
@@ -42,29 +40,16 @@ export const initialCommentsState: CommentsState =
 // Reducer functions
 export const commentReducers = createReducer(
   initialCommentsState,
-
-  on(comment)
+  on(CommentsActions['[PostsComments]GetAllComments'], (state, action) => {
+    console.info(`get comments for post ${action.postId}`, { state, action });
+    return { ...state, loaded: false, error: null };
+  }),
+  on(CommentsActions['[PostsComments]GetAllCommentsSuccess'], (state, action) => {
+    console.info(`get comment for post ${action.postId} success`, {state, action});
+    return commentsAdapter.addMany(action.comments, { ...state, loaded: true });
+  }),
+  on(CommentsActions['[PostsComments]GetAllCommentsFailure'], (state, action) => {
+    console.error(`get comment for post ${action.postId} failure`);
+    return { ...state, loaded: true, error: action.error}
+  })
 );
-
-const reducer = createReducer(
-  initialCommentsState,
-  on(initComments, (state) => ({
-    ...state,
-    loaded: false,
-    error: null,
-  })),
-  on(loadCommentsSuccess, (state, { comments }) =>
-    commentsAdapter.setAll(comments, { ...state, loaded: true })
-  ),
-  on(loadCommentsFailure, (state, { error }) => ({
-    ...state,
-    error,
-  }))
-);
-
-export function commentsReducer(
-  state: CommentsState | undefined,
-  action: Action
-) {
-  return reducer(state, action);
-}
