@@ -8,8 +8,8 @@ import { createReducer, on } from '@ngrx/store';
 import { UserActions } from './users.actions';
 import { User } from '@shared-store/utilities';
 
+// Users state
 export const USERS_FEATURE_KEY = 'users';
-
 export interface UsersState extends EntityState<User> {
   selectedId?: string | number; // which Users record has been selected
   loaded: boolean; // has the Users list been loaded
@@ -38,6 +38,7 @@ export const initialUsersState: UsersState = usersAdapter.getInitialState({
   loaded: false,
 });
 
+// Reducer functions
 export const userReducers = createReducer(
   initialUsersState,
 

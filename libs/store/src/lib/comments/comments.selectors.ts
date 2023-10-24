@@ -30,3 +30,16 @@ export const selectCommentsEntities = createSelector(
   selectCommentsState,
   (state: CommentsState) => selectEntities(state)
 );
+
+export const selectSelectedComment = createSelector(
+  selectCommentsState,
+  selectCommentsEntities,
+  (state: CommentsState) => state?.entities[state.selectedId!] || null
+);
+
+export const selectCommentById = (id: number) =>
+  createSelector(
+    selectCommentsState,
+    selectEntities,
+    (state: CommentsState) => state?.entities[id] || null
+  );

@@ -1,21 +1,59 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
+import { Comment } from '@shared-store/utilities';
 
-/**
- * Interface for the 'Comments' data
- */
-export interface CommentsEntity {
-  id: string | number; // Primary ID
-  name: string;
-}
+export const CommentActions = createActionGroup({
+  source: 'Comments',
+  events: {
+    // Get
+    '[User Comments] Get Comment': props<{
+      userId: number;
+      commentId: number;
+    }>(),
+    '[User Comments] Get Comment Success': props<{
+      userId: number;
+      comment: Comment;
+    }>(),
+    '[User Comments] Get Comment Failure': props<{ error: string }>(),
 
-export const initComments = createAction('[Comments Page] Init');
+    // Get All
+    '[User Comments] Get All Comment': props<{ userId: number }>(),
+    '[User Comments] Get All Comment Success': props<{
+      userId: number;
+      comments: Comment[];
+    }>(),
+    '[User Comments] Get All Comment Failure': props<{ error: string }>(),
 
-export const loadCommentsSuccess = createAction(
-  '[Comments/API] Load Comments Success',
-  props<{ comments: CommentsEntity[] }>()
-);
+    // Add
+    '[User Comments] Add Comment': props<{
+      userId: number;
+      comment: Comment;
+    }>(),
+    '[User Comments] Add Comment Success': props<{
+      userId: number;
+      comment: Comment;
+    }>(),
+    '[User Comments] Add Comment Failure': props<{ error: string }>(),
 
-export const loadCommentsFailure = createAction(
-  '[Comments/API] Load Comments Failure',
-  props<{ error: any }>()
-);
+    // Update
+    '[User Comments] Update Comment': props<{
+      userId: number;
+      comment: Comment;
+    }>(),
+    '[User Comments] Update Comment Success': props<{
+      userId: number;
+      comment: Comment;
+    }>(),
+    '[User Comments] Update Comment Failure': props<{ error: string }>(),
+
+    // Delete
+    '[User Comments] Delete Comment': props<{
+      userId: number;
+      commentId: number;
+    }>(),
+    '[User Comments] Delete Comment Success': props<{
+      userId: number;
+      commentId: number;
+    }>(),
+    '[User Comments] Delete Comment Failure': props<{ error: string }>(),
+  },
+});
