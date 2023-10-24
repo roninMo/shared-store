@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Countries, UserForm } from '@shared-store/utilities';
@@ -23,8 +23,9 @@ import {
   ],
 })
 export class UserFormComponent implements OnInit {
+  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   @Input() userForm!: FormGroup<UserForm>;
-  @Input() onUserCreated: (() => void) | undefined;
+  @Input() submitFormLabel = 'Submit Form';
   countries: string[] = Countries;
 
   ngOnInit(): void {
@@ -36,10 +37,8 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-  protected createUser(): void {
-    console.log('user form -> created a user!', this.userForm);
-    if (this.onUserCreated) {
-      this.onUserCreated();
-    }
+  protected onFormSubmitted(): void {
+    // console.log('submitted the form: ', this.userForm);
+    this.formSubmitted.emit();
   }
 }

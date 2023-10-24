@@ -51,7 +51,7 @@ export class UsersPageComponent {
     this.user = store.select(selectSelectedUser);
 
     this.createUpdateUserForm();
-    this.activeUserId = new FormControl();
+    this.activeUserId = new FormControl(0, { nonNullable: true });
     this.createAddUserForm();
   }
 
@@ -62,8 +62,9 @@ export class UsersPageComponent {
   }
 
   addUser() {
-    console.log('add user form: ', this.addUserForm);
+    console.log('\nadd user form: ', this.addUserForm);
     const userInformation: User = this.addUserForm.getRawValue();
+    this.addDummyId(this.addUserForm);
     this.store.dispatch(
       UserActions['[UserPage]AddUser']({ user: userInformation })
     );
@@ -77,8 +78,9 @@ export class UsersPageComponent {
   }
 
   updateUser() {
-    console.log('update user form: ', this.updateUserForm);
+    console.log('\nupdate user form: ', this.updateUserForm);
     const userInformation: User = this.updateUserForm.getRawValue();
+    this.addDummyId(this.updateUserForm);
     this.store.dispatch(
       UserActions['[UserPage]AddUser']({ user: userInformation })
     );
@@ -164,5 +166,11 @@ export class UsersPageComponent {
       },
       formGroupOptions
     );
+  }
+
+  protected addDummyId(form: FormGroup<UserForm>): void {
+    if (form) {
+      form.controls.id.setValue(11);
+    }
   }
 }

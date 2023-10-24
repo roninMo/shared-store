@@ -132,8 +132,8 @@
   <!-- Create User -->
   <div class="mt-14 flex items-center justify-end gap-x-6">
     <shared-store-button
-      [OnClick]="createUser"
-      label="Create User"
+      (OnClicked)="onFormSubmitted()"
+      [label]="submitFormLabel"
     />
   </div>
 </div>

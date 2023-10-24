@@ -28,9 +28,10 @@
     />
 
     <div class="mt-14 flex items-center justify-end gap-x-6">
-      <button type="submit" class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-        Delete user
-      </button>
+      <shared-store-button 
+        label="Delete User"
+        (click)="deleteUser()"
+      />
     </div>
   </div>
 
@@ -43,7 +44,8 @@
     </h1>
     <shared-store-user-form 
       [userForm]="addUserForm"
-      [onUserCreated]="addUser"
+      submitFormLabel="Add User"
+      (formSubmitted)="addUser()"
     />
   </div>
 
@@ -54,6 +56,8 @@
     </h1>
     <shared-store-user-form
       [userForm]="updateUserForm"
+      submitFormLabel="Update User"
+      (formSubmitted)="updateUser()"
     />
   </div>
 </div>
