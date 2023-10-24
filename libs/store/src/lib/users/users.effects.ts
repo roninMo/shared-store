@@ -17,9 +17,9 @@ export class UsersEffects {
         return this.http
           .get<User>(`${jsonApiRoute_Base}/users/${event.userId}`)
           .pipe(
-            tap((data) => console.info('\n\nincoming getUser api data: ', data)),
+            // tap((data) => console.info('\n\nincoming getUser api data: ', data)),
             map((user) => {
-              console.info('get user effect api call: ', user);
+              // console.info('get user effect api call: ', user);
               return UserActions['[UserPage]GetUserSuccess']({
                 user: user,
               });
@@ -46,7 +46,7 @@ export class UsersEffects {
           .pipe(
             // tap((data) => console.info('\n\nincoming addUser api data: ', data)),
             map((user) => {
-              console.info('add user effect api call: ', user);
+              // console.info('add user effect api call: ', user);
               return UserActions['[UserPage]AddUserSuccess']({
                 user: user,
               });
@@ -69,7 +69,7 @@ export class UsersEffects {
           .delete(`${jsonApiRoute_Base}/users/${event.userId}`)
           .pipe(
             map((user) => {
-              console.info('delete user effect api call: ', user);
+              // console.info('delete user effect api call: ', user);
               return UserActions['[UserPage]DeleteUserSuccess']({
                 userId: event.userId,
               });
@@ -91,7 +91,7 @@ export class UsersEffects {
           .put<User>(`${jsonApiRoute_Base}/users/${event.user.id}`, event.user)
           .pipe(
             map((user) => {
-              console.info('update user effect api call', user);
+              // console.info('update user effect api call', user);
               return UserActions['[UserPage]UpdateUserSuccess']({ user });
             }),
             catchError((error) => {

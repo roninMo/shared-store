@@ -44,7 +44,7 @@ export const userReducers = createReducer(
 
   // Get user
   on(UserActions['[UserPage]GetUser'], (state, action) => {
-    console.info(`get user[${action.userId}]: `, { state, action });
+    console.info(`\n\nget user[${action.userId}]: `, { state, action });
     return { ...state, selectedId: action.userId, loaded: false, error: null };
   }),
   on(UserActions['[UserPage]GetUserSuccess'], (state, action) => {

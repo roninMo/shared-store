@@ -18,7 +18,7 @@ export class CommentsEffects {
           .get<Comment[]>(`${jsonApiRoute_Base}/posts/${event.postId}/comments`)
           .pipe(
             map((comments) => {
-              console.info('get post comments effect api call: ', comments);
+              // console.info('get post comments effect api call: ', comments);
               return CommentsActions['[PostsComments]GetAllCommentsSuccess']({ 
                 postId: event.postId, 
                 comments 
@@ -45,7 +45,7 @@ export class CommentsEffects {
           .get<Comment>(`${jsonApiRoute_Base}/comments/${event.commentId}`)
           .pipe(
             map((comment) => {
-              console.info('get comment effect api call: ', comment);
+              // console.info('get comment effect api call: ', comment);
               return CommentsActions['[PostsComments]GetCommentSuccess']({ postId: event.postId, comment });
             }),
             catchError((error) => {
@@ -69,7 +69,7 @@ export class CommentsEffects {
           .post<Comment>(`${jsonApiRoute_Base}/comments`, event.comment)
           .pipe(
             map((comment) => {
-              console.info('add comment effect api call: ', comment);
+              // console.info('add comment effect api call: ', comment);
               return CommentsActions['[PostsComments]AddCommentSuccess']({ postId: event.postId, comment });
             }),
             catchError((error) => {
@@ -93,7 +93,7 @@ export class CommentsEffects {
           .delete(`${jsonApiRoute_Base}/comments/${event.commentId}`)
           .pipe(
             map((comment) => {
-              console.info('delete comment effect api call: ', comment);
+              // console.info('delete comment effect api call: ', comment);
               return CommentsActions['[PostsComments]DeleteCommentSuccess']({ postId: event.postId, commentId: event.commentId });
             }),
             catchError((error) => {
@@ -117,7 +117,7 @@ export class CommentsEffects {
           .put<Comment>(`${jsonApiRoute_Base}/comments/${event.comment.id}`, event.comment)
           .pipe(
             map((comment) => {
-              console.info('update comment effect api call: ', comment);
+              // console.info('update comment effect api call: ', comment);
               return CommentsActions['[PostsComments]UpdateCommentSuccess']({ postId: event.postId, comment });
             }),
             catchError((error) => {

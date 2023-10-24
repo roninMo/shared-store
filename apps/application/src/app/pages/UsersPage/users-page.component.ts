@@ -56,7 +56,7 @@ export class UsersPageComponent {
   updateUserForm!: FormGroup<UserForm>;
 
   constructor(protected fb: FormBuilder, protected store: Store) {
-    this.users = store.select(selectUsersEntities).pipe(takeUntilDestroyed());
+    this.users = store.select(selectUsersEntities);
     this.user = store.select(selectSelectedUser);
     this.posts = store.select(selectAllUserPosts(this?.activeUserId?.value || 0));
     this.post = store.select(selectPostById(1));
@@ -67,9 +67,9 @@ export class UsersPageComponent {
   }
 
   getUser() {
-    this.store.dispatch(
-      UserActions['[UserPage]GetUser']({ userId: this.activeUserId.value || 0 })
-    );
+    this.store.dispatch(UserActions['[UserPage]GetUser']({ userId: this.activeUserId.value || 0 }));
+    this.posts = this.store.select(selectAllUserPosts(this?.activeUserId?.value || 0));
+    this.post = this.store.select(selectPostById(1));
   }
 
   addUser() {
@@ -92,9 +92,7 @@ export class UsersPageComponent {
     console.log('\nupdate user form: ', this.updateUserForm);
     const userInformation: User = this.updateUserForm.getRawValue();
     this.addDummyId(this.updateUserForm);
-    this.store.dispatch(
-      UserActions['[UserPage]AddUser']({ user: userInformation })
-    );
+    this.store.dispatch(UserActions['[UserPage]AddUser']({ user: userInformation }));
   }
 
   nextPost() {

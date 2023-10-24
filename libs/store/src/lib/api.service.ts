@@ -13,7 +13,7 @@ export class ApiService {
     return this.http.get<T>(url, config).pipe(
       tap((data) => this.handleResponse(data)),
       map((data) => {
-        console.log('http get information: ', data);
+        // console.log('http get information: ', data);
         return data;
       })
     );
@@ -27,7 +27,7 @@ export class ApiService {
     return this.http.post<T>(url, data, config).pipe(
       tap((data) => this.handleResponse(data)),
       map((data) => {
-        console.log('http get information: ', data);
+        // console.log('http get information: ', data);
         return data;
       })
     );
@@ -47,7 +47,7 @@ export class ApiService {
     return this.http.put<T>(url, data, config).pipe(
       tap((data) => this.handleResponse(data)),
       map((data) => {
-        console.log('http get information: ', data);
+        // console.log('http get information: ', data);
         return data;
       })
     );

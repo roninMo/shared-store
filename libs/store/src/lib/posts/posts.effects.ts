@@ -21,7 +21,7 @@ export class PostsEffects {
           .get<Post[]>(`${jsonApiRoute_Base}/users/${event.userId}/posts`)
           .pipe(
             map((posts) => {
-              console.info('get user posts effect api call: ', posts);
+              // console.info('get user posts effect api call: ', posts);
               return PostsActions['[UserPosts]GetAllPostSuccess']({ 
                 userId: event.userId, posts 
               });
@@ -47,7 +47,7 @@ export class PostsEffects {
         .get<Post>(`${jsonApiRoute_Base}/post/${event.postId}`)
         .pipe(
           map(post => {
-            console.info('get post effect api call: ', post);
+            // console.info('get post effect api call: ', post);
             return PostsActions['[UserPosts]GetPostSuccess']({ userId: event.userId, post });
           }),
           catchError((error) => {
@@ -67,7 +67,7 @@ export class PostsEffects {
         .post<Post>(`${jsonApiRoute_Base}/post`, event.post)
         .pipe(
           map(post => {
-            console.info('create post effect api call: ', post);
+            // console.info('create post effect api call: ', post);
             return PostsActions['[UserPosts]AddPostSuccess']({ userId: event.userId, post });
           }),
           catchError((error) => {
@@ -87,7 +87,7 @@ export class PostsEffects {
         .delete(`${jsonApiRoute_Base}/post/${event.postId}`)
         .pipe(
           map(post => {
-            console.info('delete post effect api call: ', post);
+            // console.info('delete post effect api call: ', post);
             return PostsActions['[UserPosts]DeletePostSuccess']({ userId: event.userId, postId: event.postId });
           }),
           catchError((error) => {
@@ -107,7 +107,7 @@ export class PostsEffects {
         .put<Post>(`${jsonApiRoute_Base}/post/${event.post.id}`, event.post)
         .pipe(
           map(post => {
-            console.info('update post effect api call: ', post);
+            // console.info('update post effect api call: ', post);
             return PostsActions['[UserPosts]UpdatePostSuccess']({ userId: event.userId, post });
           }),
           catchError((error) => {

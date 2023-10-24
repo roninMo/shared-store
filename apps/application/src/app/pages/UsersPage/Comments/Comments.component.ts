@@ -19,7 +19,6 @@ export class CommentsComponent {
     if (data) {
       this.post = data;
       this.getComments(data.id);
-      console.log('\n\ngetting the comments for post: ', data);
     }
   }
   public get postData(): Post {
@@ -32,8 +31,10 @@ export class CommentsComponent {
   constructor(protected store: Store) {}
 
   protected getComments(id: number) {
-    this.store.dispatch(CommentsActions['[PostsComments]GetAllComments']({ postId: id }));
-    this.comments = this.store.select(selectAllPostComments(this.post.id));
+    if (id > 0) {
+      this.store.dispatch(CommentsActions['[PostsComments]GetAllComments']({ postId: id }));
+      this.comments = this.store.select(selectAllPostComments(id));
+    }
   }
 
   printComments() {
