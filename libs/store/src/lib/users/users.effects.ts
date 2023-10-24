@@ -87,6 +87,8 @@ export class UsersEffects {
     this.actions$.pipe(
       ofType(UserActions['[UserPage]UpdateUser']),
       concatMap((event) => {
+
+        console.log('update user event data', {event, url: `${jsonApiRoute_Base}/users/${event.user.id}`});
         return this.http
           .put<User>(`${jsonApiRoute_Base}/users/${event.user.id}`, event.user)
           .pipe(

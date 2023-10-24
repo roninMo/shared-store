@@ -46,7 +46,6 @@ export class UsersPageComponent {
   // Store
   user: Observable<User | null>;
   users: Observable<Dictionary<User>>;
-  post: Observable<Post | null>;
   posts: Observable<Post[]>;
   currentPost = 1;
 
@@ -58,8 +57,7 @@ export class UsersPageComponent {
   constructor(protected fb: FormBuilder, protected store: Store) {
     this.users = store.select(selectUsersEntities);
     this.user = store.select(selectSelectedUser);
-    this.posts = store.select(selectAllUserPosts(this?.activeUserId?.value || 0));
-    this.post = store.select(selectPostById(1));
+    this.posts = store.select(selectAllUserPosts(this?.activeUserId?.value || 1));
 
     this.createUpdateUserForm();
     this.activeUserId = new FormControl(0, { nonNullable: true });
@@ -69,13 +67,12 @@ export class UsersPageComponent {
   getUser() {
     this.store.dispatch(UserActions['[UserPage]GetUser']({ userId: this.activeUserId.value || 0 }));
     this.posts = this.store.select(selectAllUserPosts(this?.activeUserId?.value || 0));
-    this.post = this.store.select(selectPostById(1));
   }
 
   addUser() {
     console.log('\nadd user form: ', this.addUserForm);
-    const userInformation: User = this.addUserForm.getRawValue();
     this.addDummyId(this.addUserForm);
+    const userInformation: User = this.addUserForm.getRawValue();
     this.store.dispatch(
       UserActions['[UserPage]AddUser']({ user: userInformation })
     );
@@ -90,21 +87,9 @@ export class UsersPageComponent {
 
   updateUser() {
     console.log('\nupdate user form: ', this.updateUserForm);
+    this.addDummyId(this.updateUserForm, 9);
     const userInformation: User = this.updateUserForm.getRawValue();
-    this.addDummyId(this.updateUserForm);
-    this.store.dispatch(UserActions['[UserPage]AddUser']({ user: userInformation }));
-  }
-
-  nextPost() {
-    this.currentPost ++;
-    this.post = this.store.select(selectPostById(this.currentPost));
-  }
-  
-  previousPost() {
-    if (this.currentPost > 0) {
-      this.currentPost --;
-      this.post = this.store.select(selectPostById(this.currentPost));
-    }
+    this.store.dispatch(UserActions['[UserPage]UpdateUser']({ user: userInformation }));
   }
 
   createAddUserForm() {
@@ -189,9 +174,9 @@ export class UsersPageComponent {
     );
   }
 
-  protected addDummyId(form: FormGroup<UserForm>): void {
+  protected addDummyId(form: FormGroup<UserForm>, id = 11): void {
     if (form) {
-      form.controls.id.setValue(11);
+      form.controls.id.setValue(id);
     }
   }
 }

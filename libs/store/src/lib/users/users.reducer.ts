@@ -93,7 +93,7 @@ export const userReducers = createReducer(
   // Update user
   on(UserActions['[UserPage]UpdateUser'], (state, action) => {
     console.info(`update user[${action.user.id}]: `, { state, action });
-    return { ...state, loaded: false, error: null };
+    return { ...state, selectedId: action.user.id, loaded: false, error: null };
   }),
   on(UserActions['[UserPage]UpdateUserSuccess'], (state, action) => {
     console.info('update user success: ', { state, action });
