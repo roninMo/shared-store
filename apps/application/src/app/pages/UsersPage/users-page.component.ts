@@ -14,14 +14,18 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Dictionary } from '@ngrx/entity';
-import { UserForm, User, AddressForm } from '@shared-store/utilities';
+import { UserForm, User, AddressForm, Post } from '@shared-store/utilities';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   UserActions,
+  selectAllUserPosts,
+  selectPostById,
   selectSelectedUser,
   selectUsersEntities,
 } from '@shared-store/shared-store';
+import { CommentsComponent } from './Comments/Comments.component';
+import { PostComponent } from './Post/Post.component';
 
 @Component({
   selector: 'shared-store-users-page',
@@ -30,6 +34,8 @@ import {
   styleUrls: ['./users-page.component.scss'],
   imports: [
     CommonModule,
+    CommentsComponent,
+    PostComponent,
     InputComponent,
     ButtonComponent,
     UserInformationComponent,
@@ -40,6 +46,9 @@ export class UsersPageComponent {
   // Store
   user: Observable<User | null>;
   users: Observable<Dictionary<User>>;
+  post: Observable<Post | null>;
+  posts: Observable<Post[]>;
+  currentPost = 1;
 
   // Form
   addUserForm!: FormGroup<UserForm>;
@@ -49,6 +58,8 @@ export class UsersPageComponent {
   constructor(protected fb: FormBuilder, protected store: Store) {
     this.users = store.select(selectUsersEntities).pipe(takeUntilDestroyed());
     this.user = store.select(selectSelectedUser);
+    this.posts = store.select(selectAllUserPosts(this?.activeUserId?.value || 0));
+    this.post = store.select(selectPostById(1));
 
     this.createUpdateUserForm();
     this.activeUserId = new FormControl(0, { nonNullable: true });
@@ -84,6 +95,18 @@ export class UsersPageComponent {
     this.store.dispatch(
       UserActions['[UserPage]AddUser']({ user: userInformation })
     );
+  }
+
+  nextPost() {
+    this.currentPost ++;
+    this.post = this.store.select(selectPostById(this.currentPost));
+  }
+  
+  previousPost() {
+    if (this.currentPost > 0) {
+      this.currentPost --;
+      this.post = this.store.select(selectPostById(this.currentPost));
+    }
   }
 
   createAddUserForm() {

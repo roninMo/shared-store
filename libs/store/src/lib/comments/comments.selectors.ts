@@ -4,6 +4,7 @@ import {
   CommentsState,
   commentsAdapter,
 } from './comments.reducer';
+import { Comment } from '@shared-store/utilities';
 
 // Lookup the 'Comments' feature state managed by NgRx
 export const selectCommentsState =
@@ -37,9 +38,15 @@ export const selectSelectedComment = createSelector(
   (state: CommentsState) => state?.entities[state.selectedId!] || null
 );
 
-export const selectCommentById = (id: number) =>
+export const selectCommentById = (commentId: number) =>
   createSelector(
     selectCommentsState,
     selectEntities,
-    (state: CommentsState) => state?.entities[id] || null
+    (state: CommentsState) => state?.entities[commentId] || null
+  );
+
+export const selectAllPostComments = (postId: number) =>
+  createSelector(
+    selectAllComments,
+    (comments: Comment[]) => comments?.filter(comment => comment.postId == postId)
   );

@@ -37,6 +37,35 @@
 
   <div class="mx-auto max-w-3xl border-t border-white/10 pb-8">&nbsp;</div>
 
+  <!-- Content section -->
+  <div class="mx-auto max-w-3xl flex justify-between">
+    <h2 class="mb-6 pb-4 text-2xl sm:text-3xl font-semibold leading-7 text-white">Posts</h2>
+
+    <nav class="flex items-center justify-end gap-5 px-4 py-3 sm:px-6" aria-label="Pagination">
+      <div class="hidden sm:block">
+        <p class="text-sm text-slate-400">
+          Showing <span class="font-medium">1</span> of <span class="font-medium">20</span> results
+        </p>
+      </div>
+
+      <div class="flex justify-between sm:justify-end">
+        <a (click)="nextPost()" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-slate-200 ring-1 ring-inset ring-slate-300 hover:text-gray-900 hover:bg-gray-50 focus-visible:outline-offset-0 cursor-pointer">Previous</a>
+        <a (click)="previousPost()" class="relative ml-3 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-slate-200 ring-1 ring-inset ring-slate-300 hover:text-gray-900 hover:bg-gray-50 focus-visible:outline-offset-0 cursor-pointer">Next</a>
+      </div>
+    </nav>
+  </div>
+
+
+  <shared-store-post 
+    [userData]="(user | async)"
+    [postData]="post | async"
+  />
+
+
+
+
+  <div class="mx-auto max-w-3xl border-t border-white/10 pb-8">&nbsp;</div>
+
   <!-- Create user -->
   <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
     <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">

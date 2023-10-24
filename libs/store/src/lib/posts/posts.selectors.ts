@@ -29,13 +29,17 @@ export const selectPostsEntities = createSelector(
 
 export const selectSelectedPost = createSelector(
   selectPostsState,
-  selectPostsEntities,
   (state: PostsState) => state?.entities[state.selectedId!] || null
 );
 
 export const selectPostById = (id: number) =>
   createSelector(
     selectPostsState,
-    selectEntities,
     (state: PostsState) => state?.entities[id] || null
+  );
+
+export const selectAllUserPosts = (userId: number) =>
+  createSelector(
+    selectAllPosts,
+    (posts) => posts?.filter(post => post.userId == userId)
   );

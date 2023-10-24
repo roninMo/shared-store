@@ -60,7 +60,7 @@ export const appRoutes: Route[] = [
   },
 
   // Redirects
-  // { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`
   { path: 'user', redirectTo: '/users', pathMatch: 'full' }, // redirect to `first-component`
   // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
   { path: '**', component: HomePageComponent }, // Wildcard route for a 404 page

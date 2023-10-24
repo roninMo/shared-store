@@ -45,11 +45,11 @@ export const commentReducers = createReducer(
     return { ...state, loaded: false, error: null };
   }),
   on(CommentsActions['[PostsComments]GetAllCommentsSuccess'], (state, action) => {
-    console.info(`get comment for post ${action.postId} success`, {state, action});
+    console.info(`get comments for post ${action.postId} success`, {state, action});
     return commentsAdapter.addMany(action.comments, { ...state, loaded: true });
   }),
   on(CommentsActions['[PostsComments]GetAllCommentsFailure'], (state, action) => {
-    console.error(`get comment for post ${action.postId} failure`);
+    console.error(`get comments for post ${action.postId} failure`);
     return { ...state, loaded: true, error: action.error}
   })
 );
