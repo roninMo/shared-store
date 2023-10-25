@@ -13,6 +13,9 @@ import {
   POSTS_FEATURE_KEY,
   postsReducers,
   PostsEffects,
+  TODOS_FEATURE_KEY,
+  todoReducer,
+  TodoEffects,
 } from '@shared-store/shared-store';
 import { HomePageComponent } from './pages/HomePage/home-page.component';
 import { UsersPageComponent } from './pages/UsersPage/users-page.component';
@@ -37,6 +40,10 @@ export const appRoutes: Route[] = [
       // Comments
       provideState(COMMENTS_FEATURE_KEY, commentReducers),
       provideEffects(CommentsEffects),
+
+      // Todos
+      provideState(TODOS_FEATURE_KEY, todoReducer),
+      provideEffects(TodoEffects)
     ],
   },
   {
@@ -56,6 +63,10 @@ export const appRoutes: Route[] = [
       // Comments
       provideState(COMMENTS_FEATURE_KEY, commentReducers),
       provideEffects(CommentsEffects),
+      
+      // Todos
+      provideState(TODOS_FEATURE_KEY, todoReducer),
+      provideEffects(TodoEffects)
     ]
   },
 
