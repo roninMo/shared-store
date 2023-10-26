@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { isDevMode } from '@angular/core';
+import { EnvironmentProviders, Provider, isDevMode } from '@angular/core';
 import {
   USERS_FEATURE_KEY,
   userReducers,
@@ -20,54 +20,36 @@ import {
 import { HomePageComponent } from './pages/HomePage/home-page.component';
 import { UsersPageComponent } from './pages/UsersPage/users-page.component';
 
+const storeProviders: (Provider | EnvironmentProviders)[]  = [
+  // Users
+  provideState(USERS_FEATURE_KEY, userReducers),
+  provideEffects(UsersEffects),
+
+  // Posts
+  provideState(POSTS_FEATURE_KEY, postsReducers),
+  provideEffects(PostsEffects),
+
+  // Comments
+  provideState(COMMENTS_FEATURE_KEY, commentReducers),
+  provideEffects(CommentsEffects),
+
+  // Todos
+  provideState(TODOS_FEATURE_KEY, todoReducer),
+  provideEffects(TodoEffects)
+];
+
 export const appRoutes: Route[] = [
   // Routes
   {
     path: 'home',
     pathMatch: 'full',
     component: HomePageComponent,
-    providers: [
-      provideStoreDevtools({ logOnly: !isDevMode() }),
-
-      // Users
-      provideState(USERS_FEATURE_KEY, userReducers),
-      provideEffects(UsersEffects),
-
-      // Posts
-      provideState(POSTS_FEATURE_KEY, postsReducers),
-      provideEffects(PostsEffects),
-
-      // Comments
-      provideState(COMMENTS_FEATURE_KEY, commentReducers),
-      provideEffects(CommentsEffects),
-
-      // Todos
-      provideState(TODOS_FEATURE_KEY, todoReducer),
-      provideEffects(TodoEffects)
-    ],
+    providers: storeProviders,
   },
   {
     path: 'users',
     component: UsersPageComponent,
-    providers: [
-      provideStoreDevtools({ logOnly: !isDevMode() }),
-      
-      // Users
-      provideState(USERS_FEATURE_KEY, userReducers),
-      provideEffects(UsersEffects),
-
-      // Posts
-      provideState(POSTS_FEATURE_KEY, postsReducers),
-      provideEffects(PostsEffects),
-
-      // Comments
-      provideState(COMMENTS_FEATURE_KEY, commentReducers),
-      provideEffects(CommentsEffects),
-      
-      // Todos
-      provideState(TODOS_FEATURE_KEY, todoReducer),
-      provideEffects(TodoEffects)
-    ]
+    providers: storeProviders
   },
 
   // Redirects

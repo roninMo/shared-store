@@ -55,22 +55,16 @@ export class UsersPageComponent {
   // Form
   addUserFormFactory: UserFormFactory<UserForm>;
   addUserForm: FormGroup<UserForm>;
-  // updateUserFormFactory: UserFormFactory<UserForm>;
   updateUserForm: FormGroup<UserForm>;
   activeUserId: FormControl<number>;
 
   constructor(protected fb: FormBuilder, protected store: Store) {
     // Forms
-    this.updateUserForm = this.createUserForm();
-    this.addUserForm = this.createUserForm();
-    
     this.addUserFormFactory = new UserFormFactory<UserForm>(this.destroy, this.fb);
-    console.log('user form factory: ', this.addUserFormFactory);
-    // this.addUserForm = this.addUserFormFactory.form;
-    // this.updateUserFormFactory = new UserFormFactory<UserForm>(this.destroy, this.fb);
-    // this.updateUserForm = this.updateUserFormFactory.form;
-    
+    this.addUserForm = this.addUserFormFactory.createForm();
+    this.updateUserForm = this.addUserFormFactory.createForm();
     this.activeUserId = new FormControl(0, { nonNullable: true });
+    console.info('user form factory: ', this.addUserFormFactory);
     
     // Store
     this.users = store.select(selectUsersEntities);
@@ -104,47 +98,6 @@ export class UsersPageComponent {
     this.addDummyId(this.updateUserForm, 9);
     const userInformation: User = this.updateUserForm.getRawValue();
     this.store.dispatch(UserActions['[UserPage]UpdateUser']({ user: userInformation }));
-  }
-
-  createUserForm(): FormGroup<UserForm> {
-    const formGroupOptions: AbstractControlOptions = {
-      validators: [],
-      asyncValidators: [],
-      updateOn: 'change',
-    };
-
-    const addressGroup: FormGroup<AddressForm> = this.fb.group<AddressForm>(
-      {
-        street: new FormControl(),
-        suite: new FormControl(),
-        city: new FormControl(),
-        zipcode: new FormControl(),
-        country: new FormControl(),
-        geo: new FormGroup({
-          lat: new FormControl(),
-          lng: new FormControl(),
-        }),
-      },
-      formGroupOptions
-    );
-
-    return this.fb.group<UserForm>(
-      {
-        id: new FormControl(),
-        name: new FormControl(),
-        username: new FormControl(),
-        email: new FormControl(),
-        address: addressGroup,
-        phone: new FormControl(),
-        website: new FormControl(),
-        company: new FormGroup({
-          name: new FormControl(),
-          catchPhrase: new FormControl(),
-          bs: new FormControl(),
-        }),
-      },
-      formGroupOptions
-    );
   }
 
   protected addDummyId(form: FormGroup<UserForm>, id = 11): void {

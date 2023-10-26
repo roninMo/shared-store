@@ -7,11 +7,11 @@ import { AddressForm, UserForm } from "../models";
 
 
 export class UserFormFactory<T> extends SubclassedFormFactory<UserForm> implements SubclassedForm<UserForm> {
-  protected override _form: FormGroup<UserForm>;
+  // protected override _form: FormGroup<UserForm>;
 
   constructor(protected override ref: DestroyRef, protected override fb: FormBuilder) {
     super(ref, fb);
-    this._form = this.createForm();
+    // this._form = this.createForm();
   }
   
   public createForm(): FormGroup {
