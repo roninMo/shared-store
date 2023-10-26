@@ -14,13 +14,12 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Dictionary } from '@ngrx/entity';
-import { SubclassedForm, UserForm, User, AddressForm, Post, UserFormFactory } from '@shared-store/utilities';
+import { SubclassedForm, UserForm, User, Post, UserFormFactory, SublcassedFormGroup } from '@shared-store/utilities';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   UserActions,
   selectAllUserPosts,
-  selectPostById,
   selectSelectedUser,
   selectUsersEntities,
 } from '@shared-store/shared-store';
@@ -54,17 +53,24 @@ export class UsersPageComponent {
 
   // Form
   addUserFormFactory: UserFormFactory<UserForm>;
-  addUserForm: FormGroup<UserForm>;
-  updateUserForm: FormGroup<UserForm>;
+  updateUserFormFactory: UserFormFactory<UserForm>;
+
+  get addUserForm(): SublcassedFormGroup<UserForm> {
+    return this.addUserFormFactory.form;
+  }
+
+  get updateUserForm(): SublcassedFormGroup<UserForm> {
+    return this.updateUserFormFactory.form;
+  }
+
   activeUserId: FormControl<number>;
 
   constructor(protected fb: FormBuilder, protected store: Store) {
     // Forms
     this.addUserFormFactory = new UserFormFactory<UserForm>(this.destroy, this.fb);
-    this.addUserForm = this.addUserFormFactory.createForm();
-    this.updateUserForm = this.addUserFormFactory.createForm();
+    this.updateUserFormFactory = new UserFormFactory<UserForm>(this.destroy, this.fb);
     this.activeUserId = new FormControl(0, { nonNullable: true });
-    console.info('user form factory: ', this.addUserFormFactory);
+    console.info('user form factory: ', { addUser: this.addUserFormFactory, updateUser: this.updateUserFormFactory });
     
     // Store
     this.users = store.select(selectUsersEntities);
@@ -100,7 +106,7 @@ export class UsersPageComponent {
     this.store.dispatch(UserActions['[UserPage]UpdateUser']({ user: userInformation }));
   }
 
-  protected addDummyId(form: FormGroup<UserForm>, id = 11): void {
+  protected addDummyId(form: SublcassedFormGroup<UserForm>, id = 11): void {
     if (form) {
       form.controls.id.setValue(id);
     }

@@ -3,25 +3,26 @@ import { SubclassedFormFactory } from "./subclassed-form";
 import { SubclassedForm } from "./subclassed-form.interface";
 import { DestroyRef } from '@angular/core';
 import { AddressForm, UserForm } from "../models";
+import { SublcassedFormGroup } from "./subclassed-formGroup";
 
 
 
 export class UserFormFactory<T> extends SubclassedFormFactory<UserForm> implements SubclassedForm<UserForm> {
-  // protected override _form: FormGroup<UserForm>;
+  protected override _form: SublcassedFormGroup<UserForm>;
 
   constructor(protected override ref: DestroyRef, protected override fb: FormBuilder) {
     super(ref, fb);
-    // this._form = this.createForm();
+    this._form = this.createForm();
   }
   
-  public createForm(): FormGroup {
+  public createForm(): SublcassedFormGroup {
     const formGroupOptions: AbstractControlOptions = {
       validators: [],
       asyncValidators: [],
       updateOn: 'change',
     };
 
-    const addressGroup: FormGroup<AddressForm> = this.fb.group<AddressForm>(
+    const addressGroup: SublcassedFormGroup<AddressForm> = this.fb.group<AddressForm>(
       {
         street: new FormControl(),
         suite: new FormControl(),
@@ -56,18 +57,18 @@ export class UserFormFactory<T> extends SubclassedFormFactory<UserForm> implemen
   }
 
   onSave(): void {
-    console.log('saved the form values!', this.form);
+    console.log('saved the form values!', this?.form);
   }
   
   saveData(): void {
-    console.log('saved the form values!', this.form);
+    console.log('saved the form values!', this?.form);
   }
   
   updateAndRunBackendValidations(): void {
     console.log("complicated business logic here (i don't know what to add to these subclassed functions");
   }
 
-  public get form(): FormGroup {
-    return this.form;
+  public get form(): SublcassedFormGroup {
+    return this?._form;
   }
 }
