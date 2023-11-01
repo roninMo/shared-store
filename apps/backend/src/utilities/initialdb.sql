@@ -5,6 +5,7 @@ CREATE TABLE `User`
   `name`              VARCHAR(255) NOT NULL ,
   `username`          VARCHAR(255) NOT NULL ,
   `email`             VARCHAR(255) NOT NULL ,
+  `addressId`         INT(11) NULL ,
   `phone`             VARCHAR(255) NOT NULL ,
   `website`           VARCHAR(255) NOT NULL ,
   `created_at`        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,

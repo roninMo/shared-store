@@ -1,178 +1,105 @@
 import express from 'express';
 import { db } from '../database';
-import { Address, User } from '../models';
+import { User } from '../models/User';
 const router = express.Router();
 
 // get
-router.get("/:id", (req, res) => {
-  const id = req?.params?.id;
-  if (!id) {
-    res.send(400);
-    return;
-  }
-
-  const selectUserQuery = `
-    SELECT * FROM User 
-    LEFT JOIN Address ON User.id=Address.id
-    WHERE User.id=${id}
-  `;
-  
-  db.query(selectUserQuery, (err, result) => {
-    console.log('select user query result: ', { err, result });
-    if (err) {
-      res.sendStatus(400);
-    } else if (result instanceof Array && result?.length > 0) {
-      const userData: User & Address & any = result[0];
-      res.json({ 
-        error: null, 
-        data: {
-          user: {
-            id: userData.id,
-            name: userData.name,
-            username: userData.username,
-            email: userData.email,
-            address: {
-              id: userData.id,
-              street: userData.street,
-              suite: userData.suite,
-              city: userData.city,
-              zipcode: userData.zipcode,
-              geo: {
-                lat: userData.geo_lat,
-                lng: userData.geo_lng,
-              },
-            },
-            phone: userData.phone,
-            website: userData.website
-          }
-        }
-      });
+router.get("/:id", async (request, response, next) => {
+  try {
+    const user = await User.query().findById(request.params.id); // instanceof User
+    // Queries are like chainable events that run sql commands and also allow you to add custom modifiers also. You just need to build the functions on each class
+    // You're also allowed to chain multiple objects together, so you don't have to write multiple sql commands
+    
+    console.log('get users user: ', {user, id: request.params.id});
+    if (user) {
+      response.json({ message: 'user found', user })
     } else {
-      res.sendStatus(err ? 400 : 200);
+      response.sendStatus(404);
     }
-  });
+  } catch(error) {
+    next(error);
+  }
 });
 
 // get all
-router.get("/", (req, res) => {
-  const selectAllUsersQuery = `
-    SELECT * FROM User 
-    LEFT JOIN Address ON User.id=Address.id
-  `;
-  
-  db.query(selectAllUsersQuery, (err, result) => {
-    console.log('select user query result: ', { err, result });
-    if (err) {
-      res.sendStatus(400);
-    } else if (result instanceof Array && result?.length > 0) {
-      const users: (User & Address & any)[] = result;
-      const userData = users?.map((data: User & Address & any) => ({
-        id: data?.id,
-        name: data?.name,
-        username: data?.username,
-        email: data?.email,
-        address: {
-          id: data?.id,
-          street: data?.street,
-          suite: data?.suite,
-          city: data?.city,
-          zipcode: data?.zipcode,
-          geo: {
-            lat: data?.geo_lat,
-            lng: data?.geo_lng,
-          },
-        },
-        phone: data?.phone,
-        website: data?.website
-      }));
-      
-      res.json({ 
-        error: null, 
-        data: { users: userData },
-      });
-      return;
+router.get("/", async (request, response, next) => {
+  try {
+    const allUsers = await User.query();
+    console.log('get/ ', {request, response, allUsers});  
+    
+    console.log('get all users user: ', {allUsers});
+    if (allUsers) {
+      response.json({ message: 'user found', users: allUsers })
     } else {
-      res.sendStatus(err ? 400 : 200);
+      response.sendStatus(204);
     }
-  });
+  } catch(error) {
+    next(error);
+  }
 });
 
 // delete
-router.delete("/:id", (req, res) => {
-  const id = req?.params?.id;
-  if (!id) {
-    res.send(400);
-    return;
+router.delete("/:id", async (request, response, next) => {
+  try {
+    const deleteUser = User.query().deleteById(request.params.id);
+
+    console.log('delete user: ', {deleteUser, id: request.params.id});
+  } catch(error) {
+    next(error);
   }
-  
-  const deleteQuery = `DELETE FROM User WHERE id=${id}`;
-  db.query(deleteQuery, (err, result) => {
-    res.sendStatus(err ? 400 : 200);
-    console.log('delete query result: ', { err, result });
-  });
 });
 
 // create
-router.post("/", (req, res) => {
-  const user: User = req?.body?.data?.user;
-  if (user) {
-    // Assuming the user data is valid
-    const createQuery = `
-      INSERT INTO User(name, username, email, phone, website)
-      VALUES("${user.name}", "${user.username}", "${user.email}", "${user.phone}", "${user.website}");
-    `;
+router.post("/", async (request, response, next) => {
+  try {
+    if (request.body) {
+      const user = request.body;
+      const createdUser = User.query().insert(user); // instaceof User
+      
+      console.log('create user: ', {createdUser, user});
+      if (createdUser) {
+        response.sendStatus(200);
+      } else {
+        response.sendStatus(204);
+      }
+    } else {
+      const invalidContentError = {
+        message: 'Create user was called without the user information',
+        type: 'InvalidContent'
+      };
+      next(invalidContentError);
+    }
     
-    db.query(createQuery, (err, result, fields) => {
-      console.log('create user query result: ', { err, result, fields });
-      res.sendStatus(err ? 400 : 200);
-    });
-  } else {
-    res.sendStatus(400);
+  } catch(error) {
+    next(error);
   }
 });
 
 // update
-router.put("/:id", (req, res) => {
-  const id = req?.params?.id;
-  if (!id) {
-    res.send(400);
-    return;
+router.put("/", async (request, response, next) => {
+  try {
+    if (request.body && request.body?.id) {
+      const user = request.body;
+      const updateUser = User.query().findById(user).patch(user); // instanceof User
+      
+      console.log('update user: ', {updateUser, user});
+      if (updateUser) {
+        response.sendStatus(200);
+      } else {
+        response.sendStatus(204);
+      }
+    } else {
+      const invalidContentError = {
+        message: 'Update user was called without valid user information',
+        type: 'InvalidContent'
+      };
+      next(invalidContentError);
+    }
+    
+  } catch(error) {
+    next(error);
   }
-
-  const user: User = req?.body?.data?.user;
-  const address: Address = user?.address;
-  if (user && address) {
-    const updateQuery = `
-      UPDATE Users SET 
-        name = '${user.name}', 
-        username = '${user.username}', 
-        email = '${user.email}', 
-        address = '${user.address}', 
-        phone = '${user.phone}', 
-        website = '${user.website}',
-      WHERE id = ${id};
-
-      UPDATE Address SET 
-        street = '${address.street}', 
-        suite = '${address.suite}', 
-        city = '${address.city}', 
-        zipcode = '${address.zipcode}', 
-        country = 'United States', 
-        geo_lat = '${address.geo.lat}', 
-        geo_lng = '${address.geo.lng}',
-      WHERE id = ${id};
-    `;
-
-    db.query(updateQuery, (err, result) => {
-      console.log('update user query result: ', { err, result });
-      res.sendStatus(err ? 400 : 200);
-    });
-  } else {
-    res.sendStatus(400);
-  } 
-
-
-
 });
+
 
 module.exports = router;
