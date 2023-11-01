@@ -1,51 +1,49 @@
 import express from 'express';
 import { db } from '../database';
-import { Post } from '../models/Post';
+import { Address } from '../models/Address';
 const router = express.Router();
 
-// Get post
+// Get specific address
 router.get('/:id', async (request, response, next) => {
   try {
     const id = request.params.id;
-    const post = await Post.query().findById(id);
-
-    console.log('get post: ', {post, id});
-    if (post) {
-      response.json({ status: 200, post });
+    const address = await Address.query().findById(id);
+    console.log('get address', { address, id });
+    
+    if (address) {
+      response.json({ status: 200, address });
     } else {
       response.sendStatus(404);
     }
-
   } catch(error) {
     next(error);
   }
 });
 
-// Get all posts 
+// Get addresses
 router.get('/', async (request, response, next) => {
   try {
-    const posts = await Post.query();
-    console.log ('get all posts: ', { posts });
-  
-    if (posts) {
-      response.json({ status: 200, posts });
+    const addresses = await Address.query();
+    console.log('get all addresses', { addresses });
+    
+    if (addresses) {
+      response.json({ addresses });
     } else {
       response.sendStatus(404);
     }
-
   } catch(error) {
     next(error);
   }
 });
 
-// Delete post
+// Delete address
 router.delete('/:id', async (request, response, next) => {
   try {
     const id = request.params.id;
-    const deletePost = Post.query().deleteById(id);
-
-    console.log('delete post: ', { deletePost, id });
-    if (deletePost) {
+    const deletedAddress = await Address.query().deleteById(id);
+    
+    console.log('delete address ', { deletedAddress, id });
+    if (deletedAddress) {
       response.sendStatus(200);
     } else {
       response.sendStatus(404);
@@ -53,24 +51,24 @@ router.delete('/:id', async (request, response, next) => {
   } catch(error) {
     next(error);
   }
-}); 
+});
 
-// Create post
+// Create address
 router.post('/', async (request, response, next) => {
   try {
     if (request.body) {
-      const post = request.body;
-      const createPost = Post.query().insert(post);
+      const address = request.body;
+      const createAddress = await Address.query().insert(address);
 
-      console.log('create post: ', { createPost });
-      if (createPost) {
+      console.log('create address', { createAddress });
+      if (createAddress) {
         response.sendStatus(200);
       } else {
         response.sendStatus(400);
       }
     } else {
       const invalidContentError = {
-        message: 'Create post was called without valid post information',
+        message: 'Create address was called without valid address information',
         type: 'InvalidContent'
       };
       next(invalidContentError);
@@ -81,22 +79,22 @@ router.post('/', async (request, response, next) => {
   }
 })
 
-// Update post
+// Update address
 router.put('/', async (request, response, next) => {
   try {
     if (request.body && request.body.id) {
-      const post = request.body;
-      const updatePost = Post.query().findById(post.id).patch(post);
-
-      console.log('update post: ', { updatePost });
-      if (updatePost) {
+      const address = request.body;
+      const updateAddress = await Address.query().findById(address.id).patch(address);
+      
+      console.log('update address: ', { updateAddress, original: address });
+      if (updateAddress) {
         response.sendStatus(200);
       } else {
         response.sendStatus(404);
       }
     } else {
       const invalidContentError = {
-        message: 'Update post was called without valid post information',
+        message: 'Update address was called without valid address information',
         type: 'InvalidContent'
       };
       next(invalidContentError);

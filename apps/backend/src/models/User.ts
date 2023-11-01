@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { Model } from 'objection';
+import { Todo } from './Todos';
 import { Address } from './Address';
-const Model = require('objection');
 
 export class User extends Model {
   static get tableName() {
@@ -9,6 +9,7 @@ export class User extends Model {
   
   id!: number;
   addressId?: number;
+  address?: any;
   username!: string;
   name!: string;
   email!: string;
@@ -22,11 +23,11 @@ export class User extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['id', 'name', 'username', 'email'],
+      required: ['phone', 'name', 'username', 'email'],
 
       properties: {
-        id: { type: 'integer' },
-        addressId: { type: ['integer', null] },
+        id: { type: ['integer', 'null'] },
+        addressId: { type: ['integer', 'null'] },
         name: { type: 'string', minLength: 1, maxLength: 255 },
         username: { type: 'string', minLength: 1, maxLength: 255 },
         email: { type: 'string', minLength: 1, maxLength: 255 },
@@ -38,7 +39,7 @@ export class User extends Model {
   
   // This object defines the relations to other models.
   static get relationMappings() {
-    // Importing models here is one way to avoid require loops.
+    // Importing models here is one way to avoid require loops. (do not use old require syntax)
     return {
       address: {
         relation: Model.HasOneRelation,
@@ -48,6 +49,92 @@ export class User extends Model {
           to: 'address.id',
         },
       },
+      todo: {
+        relation: Model.HasManyRelation,
+        modelClass: Todo,
+        join: {
+          from: 'user.id',
+          to: 'todo.userId'
+        }
+      }
     };
   }
 }
+
+
+
+/* 
+
+
+User class 
+{
+  "id": 1,
+  "name": "Kieran",
+  "username": "schwegmank",
+  "email": "Sincere@april.biz",
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org"
+}
+
+
+
+User object
+{
+  "id": 1,
+  "name": "Kieran",
+  "username": "schwegmank",
+  "email": "Sincere@april.biz",
+  "address": {
+    "street": "Kulas Light",
+    "suite": "Apt. 556",
+    "city": "Gwenborough",
+    "zipcode": "92998-3874",
+    "geo": {
+      "lat": "-37.3159",
+      "lng": "81.1496"
+    }
+  },
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org",
+  "company": {
+    "name": "Romaguera-Crona",
+    "catchPhrase": "Multi-layered client-server neural-net",
+    "bs": "harness real-time e-markets"
+  }
+}
+
+
+
+
+Response object
+{
+  "user/client_information": "values",
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Kieran",
+      "username": "schwegmank",
+      "email": "Sincere@april.biz",
+      "address": {
+        "street": "Kulas Light",
+        "suite": "Apt. 556",
+        "city": "Gwenborough",
+        "zipcode": "92998-3874",
+        "geo": {
+          "lat": "-37.3159",
+          "lng": "81.1496"
+        }
+      },
+      "phone": "1-770-736-8031 x56442",
+      "website": "hildegard.org",
+      "company": {
+        "name": "Romaguera-Crona",
+        "catchPhrase": "Multi-layered client-server neural-net",
+        "bs": "harness real-time e-markets"
+      }
+    }
+  }
+}
+
+
+*/

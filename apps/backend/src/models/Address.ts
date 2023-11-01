@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { Model } from 'objection';
 import { User } from './User';
-const Model = require('objection');
 
 export class Address extends Model {
   static get tableName() {
@@ -23,7 +22,7 @@ export class Address extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['id', 'street', 'suite', 'city', 'zipcode'],
+      required: ['street', 'suite', 'city', 'zipcode'],
 
       properties: {
         id: { type: 'integer' },
@@ -40,7 +39,7 @@ export class Address extends Model {
   
   // This object defines the relations to other models.
   static get relationMappings() {
-    // Importing models here is one way to avoid require loops.
+    // Importing models here is one way to avoid require loops. (do not use old require syntax)
     return {
       address: {
         relation: Model.BelongsToOneRelation,
@@ -53,3 +52,18 @@ export class Address extends Model {
     };
   }
 };
+
+/*
+
+{
+  "id": 1,
+  "street": "Kulas Light",
+  "suite": "Apt. 556",
+  "city": "Gwenborough",
+  "zipcode": "92998-3874",
+  "country": "United Stats",
+  "geo_lat": "-37.3159",
+  "geo_lng": "81.1496"
+}
+
+*/

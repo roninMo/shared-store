@@ -128,5 +128,5 @@ export const objectionErrorHandler = (err, request, response, next) => {
     });
   }
   
-  console.error('errorHandler: ', {responseObject});  
+  console.warn('errorHandler: ', {responseObject});
 };
