@@ -26,7 +26,7 @@ router.get('/', async (request, response, next) => {
     console.log('get all todos: ', { todos });
 
     if (todos) {
-      response.json({ status, todos });
+      response.json({ status: 200, todos });
     } else {
       response.sendStatus(404);
     }

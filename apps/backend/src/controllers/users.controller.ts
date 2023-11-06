@@ -4,28 +4,26 @@ import { User } from '../models/User';
 import { Address } from '../models/Address';
 import { Todo } from '../models/Todos';
 import { Post } from '../models/Post';
+import { db_validAddress, db_validUser, constructUser, extractAddress, extractUser } from '../utilities/utils';
 const router = express.Router();
 
 // get
 router.get("/:id", async (request, response, next) => {
   try {
     const userId = request.params.id;
-    // const user = await User.query().findById(userId);
-    const user = await User.query().findById(userId);
-
-    // Queries are like chainable events that run sql commands and also allow you to add custom modifiers also. You just need to build the functions on each class
+    const user = await User.query()
+      .findById(userId)
+      .join('address', 'user.addressId', 'address.id')
+      .select('address.*', 'user.*');
+      // Queries are like chainable events that run sql commands and also allow you to add custom modifiers also. You just need to build the functions on each class
     // You're also allowed to chain multiple objects together, so you don't have to write multiple sql commands
-
-    // if (user.addressId) {
-    //   const address = await Address.query().findById(userId);
-    //   if (address) {
-    //     user.address = address;
-    //   }
-    // }
     
-    console.log('get user: ', { user });
-    if (user) {
-      response.json({ message: 'user found', user });
+    const responseObject = { message: 'user found', user };
+    console.log('get user information: ', { userId, user });
+    if (db_validUser(user) && db_validAddress(user)) {
+      response.json({ ...responseObject, user: constructUser(user) });
+    } else if (user) {
+      response.json(responseObject);
     } else {
       response.sendStatus(404);
     }
@@ -35,6 +33,7 @@ router.get("/:id", async (request, response, next) => {
   }
 });
 
+// get user todos
 router.get('/:id/todos', async (request, response, next) => {
   try {
     const userId = request.params.id;
@@ -52,6 +51,7 @@ router.get('/:id/todos', async (request, response, next) => {
   }
 });
 
+// get user posts
 router.get('/:id/posts', async (request, response, next) => {
   try {
     const userId = request.params.id;
@@ -69,8 +69,29 @@ router.get('/:id/posts', async (request, response, next) => {
   }
 });
 
-// get user posts
-// get user information 
+// get all user information 14
+router.get('/:id/information', async (request, response, next) => {
+  try {
+    const userId = request.params.id;
+    const user = await User.query().findById(userId);
+
+    if (user) {
+      const address = await Address.query().findById(user.addressId);
+      const todos = await Todo.query().where('userId', userId);
+      const posts = await Post.query().where('userId', userId);
+
+      response.json({ status: 200, message: 'user information', 
+        user: {...user, address}, todos, posts
+      });
+    }
+    else {
+      response.sendStatus(404);
+    }
+
+  } catch(error) {
+    next(error);
+  }
+})
 
 // get all
 router.get("/", async (request, response, next) => {
@@ -110,16 +131,34 @@ router.delete("/:id", async (request, response, next) => {
 // create
 router.post("/", async (request, response, next) => {
   try {
-    if (request.body) {
-      const user = request.body;
-      const createdUser = await User.query().insert(user); // instaceof User
-      
-      console.log('create user: ', {createdUser});
-      if (createdUser) {
-        response.sendStatus(200);
+    const userInformation = request.body;
+    const addressInformation = userInformation?.address;
+
+    if (db_validUser(userInformation)) {
+      console.log('valid user');
+      const user: User = extractUser(userInformation);
+      if (db_validAddress(addressInformation)) {
+        const address: Address = extractAddress(addressInformation);
+        const createdAddress = await Address.query().insert(address);
+
+        if (createdAddress) {
+          const createdUser = await createdAddress.$relatedQuery('user').insert({...user, addressId: createdAddress.id });
+          response.json({ message: 'user created', address, user, createdUser, createdAddress });
+        } else {
+          response.sendStatus(204);
+        }
+
       } else {
-        response.sendStatus(204);
+        console.log('adding user');
+        const createdUser = await Address.query().insert(user);
+        console.log('create user: ', { createdUser });
+        if (createdUser) {
+          response.sendStatus(200);
+        } else {
+          response.sendStatus(204);
+        }
       }
+
     } else {
       const invalidContentError = {
         message: 'Create user was called without the user information',

@@ -57,7 +57,7 @@ router.delete('/:id', async (request, response, next) => {
 router.post('/', async (request, response, next) => {
   try {
     if (request.body) {
-      const address = request.body;
+      const address: Address = request.body;
       const createAddress = await Address.query().insert(address);
 
       console.log('create address', { createAddress });

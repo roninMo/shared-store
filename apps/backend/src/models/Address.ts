@@ -41,7 +41,7 @@ export class Address extends Model {
   static get relationMappings() {
     // Importing models here is one way to avoid require loops. (do not use old require syntax)
     return {
-      address: {
+      user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {

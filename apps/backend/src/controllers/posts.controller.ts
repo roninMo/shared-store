@@ -42,7 +42,7 @@ router.get('/', async (request, response, next) => {
 router.delete('/:id', async (request, response, next) => {
   try {
     const id = request.params.id;
-    const deletePost = Post.query().deleteById(id);
+    const deletePost = await Post.query().deleteById(id);
 
     console.log('delete post: ', { deletePost, id });
     if (deletePost) {
@@ -60,7 +60,7 @@ router.post('/', async (request, response, next) => {
   try {
     if (request.body) {
       const post = request.body;
-      const createPost = Post.query().insert(post);
+      const createPost = await Post.query().insert(post);
 
       console.log('create post: ', { createPost });
       if (createPost) {
@@ -86,7 +86,7 @@ router.put('/', async (request, response, next) => {
   try {
     if (request.body && request.body.id) {
       const post = request.body;
-      const updatePost = Post.query().findById(post.id).patch(post);
+      const updatePost = await Post.query().findById(post.id).patch(post);
 
       console.log('update post: ', { updatePost });
       if (updatePost) {
