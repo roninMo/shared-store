@@ -14,7 +14,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Dictionary } from '@ngrx/entity';
-import { SubclassedForm, UserForm, User, Post, UserFormFactory, SublcassedFormGroup } from '@shared-store/utilities';
+import { UserForm, User, Post, SubclassedFormFactory, SublcassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder } from '@shared-store/utilities';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -52,8 +52,8 @@ export class UsersPageComponent {
   currentPost = 1;
 
   // Form
-  addUserFormFactory: UserFormFactory<UserForm>;
-  updateUserFormFactory: UserFormFactory<UserForm>;
+  addUserFormFactory: SubclassedFormFactory<UserForm>;
+  updateUserFormFactory: SubclassedFormFactory<UserForm>;
 
   get addUserForm(): SublcassedFormGroup<UserForm> {
     return this.addUserFormFactory.form;
@@ -65,10 +65,10 @@ export class UsersPageComponent {
 
   activeUserId: FormControl<number>;
 
-  constructor(protected fb: FormBuilder, protected store: Store) {
+  constructor(protected fb: SubclassedFormBuilder, protected store: Store) {
     // Forms
-    this.addUserFormFactory = new UserFormFactory<UserForm>(this.destroy, this.fb);
-    this.updateUserFormFactory = new UserFormFactory<UserForm>(this.destroy, this.fb);
+    this.addUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
+    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
     this.activeUserId = new FormControl(0, { nonNullable: true });
     console.info('user form factory: ', { addUser: this.addUserFormFactory, updateUser: this.updateUserFormFactory });
     
@@ -86,10 +86,10 @@ export class UsersPageComponent {
   addUser() {
     console.log('\nadd user form: ', this.addUserForm);
     this.addDummyId(this.addUserForm);
+
     const userInformation: User = this.addUserForm.getRawValue();
-    this.store.dispatch(
-      UserActions['[UserPage]AddUser']({ user: userInformation })
-    );
+    this.store.dispatch(UserActions['[UserPage]AddUser']({ user: userInformation }));
+    this.addUserForm.reset();
   }
 
   deleteUser() {
@@ -102,8 +102,10 @@ export class UsersPageComponent {
   updateUser() {
     console.log('\nupdate user form: ', this.updateUserForm);
     this.addDummyId(this.updateUserForm, 9);
+
     const userInformation: User = this.updateUserForm.getRawValue();
     this.store.dispatch(UserActions['[UserPage]UpdateUser']({ user: userInformation }));
+    this.updateUserForm.reset();
   }
 
   protected addDummyId(form: SublcassedFormGroup<UserForm>, id = 11): void {

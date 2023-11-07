@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { 
@@ -9,10 +10,7 @@ import {
   ValidatorFn, 
   AsyncValidatorFn, 
   FormGroup,
-  FormControl,
-  FormArray,
-  ɵFormArrayRawValue,
-  ɵFormArrayValue
+  ɵOptionalKeys
 } from "@angular/forms";
 
 export class SublcassedFormGroup<TControl extends { [K in keyof TControl]: AbstractControl<any> } = any> extends FormGroup<TControl> {
@@ -52,7 +50,27 @@ export class SublcassedFormGroup<TControl extends { [K in keyof TControl]: Abstr
     super.patchValue(value, options);
   }
 
+
   override reset(value?: ɵTypedOrUntyped<TControl, ɵFormGroupValue<TControl>, any> | undefined, options?: Object | undefined): void {
     super.reset(value, options);
   }
+
+
+  override addControl(this: FormGroup<{[key: string]: AbstractControl<any>}>, name: string, control: AbstractControl, options?: {emitEvent?: boolean}): void;
+  override addControl<K extends string&keyof TControl>(name: K, control: Required<TControl>[K], options?: { emitEvent?: boolean }): void;
+  override addControl<K extends string&keyof TControl>(name: K, control: Required<TControl>[K], options: { emitEvent?: boolean } = {}): void {
+    // this.registerControl(name, control);
+    // this.updateValueAndValidity({emitEvent: options.emitEvent});
+    // this._onCollectionChange();
+    super.addControl(name, control, options);
+  }
+
+
+  override removeControl(this: FormGroup<{[key: string]: AbstractControl<any>}>, name: string, options?: { emitEvent?: boolean;}): void;
+  override removeControl<S extends string>(name: ɵOptionalKeys<TControl>&S, options?: { emitEvent?: boolean;}): void;
+  override removeControl(name: string, options: {emitEvent?: boolean;} = {}): void {
+    super.removeControl(name, options);
+  }
+
+
 }

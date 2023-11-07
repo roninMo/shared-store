@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, } from '@angular/forms';
 import { SublcassedFormGroup } from '../subclassed-logic/subclassed-formGroup';
 
 export interface Address {
@@ -34,4 +34,16 @@ export const generateAddress = (data: Partial<Address> = {}): Address => {
   };
 
   return Object.assign(address, data);
+};
+
+
+export const emptyAddress: Address = {
+  street: '',
+  suite: '',
+  city: '',
+  zipcode: '',
+  geo: {
+    lat: '',
+    lng: '',
+  }
 };

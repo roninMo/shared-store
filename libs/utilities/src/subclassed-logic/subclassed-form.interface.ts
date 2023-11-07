@@ -1,10 +1,10 @@
-import { FormGroup } from '@angular/forms';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AbstractControlOptions, FormGroup } from '@angular/forms';
 
 
 export interface SubclassedForm<T> {
   // Create the form for this factory 
-  createForm(): FormGroup;
+  buildForm(defaultValues: T | any,  controlValidations: AbstractControlOptions, groupValidations: AbstractControlOptions): FormGroup;
 
   get form(): FormGroup;
   

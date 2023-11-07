@@ -15,7 +15,7 @@ router.get("/:id", async (request, response, next) => {
       .findById(userId)
       .join('address', 'user.addressId', 'address.id')
       .select('address.*', 'user.*');
-      // Queries are like chainable events that run sql commands and also allow you to add custom modifiers also. You just need to build the functions on each class
+    // Queries are like chainable events that run sql commands and also allow you to add custom modifiers also. You just need to build the functions on each class
     // You're also allowed to chain multiple objects together, so you don't have to write multiple sql commands
     
     const responseObject = { message: 'user found', user };

@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Address, AddressForm, generateAddress } from './Address';
 import { SublcassedFormGroup } from '../subclassed-logic/subclassed-formGroup';
 
@@ -34,13 +34,13 @@ export interface UserForm {
 
 export const Countries: string[] = ['United States', 'Mexico', 'Canada'];
 
-export const generateUser = (data: Partial<User> = {}): User => {
+export const generateUser = (data: Partial<User> = {}, address: Partial<Address> = {}): User => {
   const user = {
     id: -1,
-    name: 'Josh Foster',
-    username: 'Josh_Foster',
-    email: 'joshfoster@example.com',
-    address: generateAddress(),
+    name: '',
+    username: '',
+    email: '',
+    address: generateAddress(address),
     phone: '317-908-2517',
     website: '',
     company: {
@@ -51,4 +51,28 @@ export const generateUser = (data: Partial<User> = {}): User => {
   };
 
   return Object.assign(user, data);
+};
+
+export const emptyUser: User = {
+  id: 0,
+  name: '',
+  username: '',
+  email: '',
+  address: {
+    street: '',
+    suite: '',
+    city: '',
+    zipcode: '',
+    geo: {
+      lat: '',
+      lng: '',
+    }
+  },
+  phone: '',
+  website: '',
+  company: {
+    name: '',
+    catchPhrase: '',
+    bs: '',
+  },
 };

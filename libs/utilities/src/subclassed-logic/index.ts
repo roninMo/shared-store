@@ -1,5 +1,5 @@
 export * from './interfaces';
+export * from './subclassed-form-factory';
 export * from './subclassed-form.interface';
-export * from './subclassed-form';
+export * from './subclassed-formBuilder';
 export * from './subclassed-formGroup';
-export * from './user-form';
