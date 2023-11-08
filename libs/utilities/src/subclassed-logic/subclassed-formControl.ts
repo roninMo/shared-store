@@ -12,11 +12,13 @@ import {
 export class SubclassedFormControl<TValue = any> extends FormControl {
   
   constructor(
-    // formState and defaultValue will only be null if T is nullable
-    formState: FormControlState<TValue>|TValue = null as unknown as TValue,
-    validatorOrOpts?: ValidatorFn|ValidatorFn[]|FormControlOptions|null,
-    asyncValidator?: AsyncValidatorFn|AsyncValidatorFn[]|null) {
+      // formState and defaultValue will only be null if T is nullable
+      formState: FormControlState<TValue>|TValue = null as unknown as TValue,
+      validatorOrOpts?: ValidatorFn|ValidatorFn[]|FormControlOptions|null,
+      asyncValidator?: AsyncValidatorFn|AsyncValidatorFn[]|null
+  ) {
     super(formState, validatorOrOpts, asyncValidator);
+    // console.log('constructing form control: ', { formState, validatorOrOpts, asyncValidator });
   }
 
   override setValue(value: TValue, options: {
@@ -26,6 +28,7 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
     emitViewToModelChange?: boolean
   } = {}): void {
     super.setValue(value, options);
+    console.log('value set: ', value);
   }
 
   override patchValue(value: TValue, options: {
@@ -41,5 +44,9 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
       formState: TValue|FormControlState<TValue> = this.defaultValue,
       options: {onlySelf?: boolean, emitEvent?: boolean} = {}): void {
     super.reset(formState, options);
+  }
+
+  override updateValueAndValidity(opts?: { onlySelf?: boolean; emitEvent?: boolean; }): void {
+    super.updateValueAndValidity(opts);
   }
 }

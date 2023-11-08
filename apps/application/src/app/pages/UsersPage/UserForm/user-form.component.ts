@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
-import { Countries, UserForm } from '@shared-store/utilities';
+import { Countries, SubclassedFormFactory, SubclassedFormGroup, UserForm } from '@shared-store/utilities';
 import {
   ButtonComponent,
   InputComponent,
   SelectComponent,
   TextareaComponent,
 } from '@shared-store/components';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-store-user-form',
@@ -20,11 +21,14 @@ import {
     TextareaComponent,
     InputComponent,
     ButtonComponent,
+    FormsModule,
+    ReactiveFormsModule
   ],
 })
 export class UserFormComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
-  @Input() userForm!: FormGroup<UserForm>;
+  @Input() userFormFactory!: SubclassedFormFactory<UserForm>;
+  @Input() userForm!: SubclassedFormGroup<UserForm>;
   @Input() submitFormLabel = 'Submit Form';
   countries: string[] = Countries;
 
@@ -40,5 +44,21 @@ export class UserFormComponent implements OnInit {
   protected onFormSubmitted(): void {
     // console.log('submitted the form: ', this.userForm);
     this.formSubmitted.emit();
+  }
+
+  get UserGroup(): SubclassedFormGroup<any> {
+    return this.userForm;
+  }
+  
+  get AddressGroup(): SubclassedFormGroup<any> {
+    return this.userForm.controls.address;
+  }
+  
+  get GeoGroup(): SubclassedFormGroup<any> {
+    return this.userForm.controls.address.controls.geo;
+  }
+  
+  get CompanyGroup(): SubclassedFormGroup<any> {
+    return this.userForm.controls.company;
   }
 }

@@ -1,13 +1,17 @@
 <div class="border-b border-white/10 pb-12">
 
+
+
   <!-- User form -->
+  <!-- Group Object Container -->
   <h2 class="mt-6 text-base font-semibold leading-7 text-white">Personal Information</h2>
   <p class="mt-1 text-sm leading-6 text-gray-400">Edit and configure a User's information publicly.</p>
-  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="UserGroup">
     <!-- First name -->
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.name"
+        formControlName="name"
         autocomplete="given-name"
         label="Name"
       />
@@ -17,6 +21,7 @@
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.phone"
+        formControlName="phone"
         autocomplete="tel"
         label="Phone number"
       />
@@ -26,6 +31,7 @@
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.username"
+        formControlName="username"
         label="Username"
       />
     </div>
@@ -34,15 +40,20 @@
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.email"
+        formControlName="email"
         autocomplete="email"
         label="Email address"
       />
     </div>
   </div>
 
+
+
+
+  <!-- Group Object Address Container -->
   <h2 class="mt-6 text-base font-semibold leading-7 text-white">Address Information</h2>
   <p class="mt-1 text-sm leading-6 text-gray-400">Edit the address information.</p>
-  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="AddressGroup">
     <!-- Country -->
     <div class="sm:col-span-5">
       <shared-store-select
@@ -57,6 +68,7 @@
     <div class="col-span-full">
       <shared-store-input
         [control]="userForm.controls.address.controls.street"
+        formControlName="street"
         autocomplete="street-address"
         label="Street address"
       />
@@ -66,6 +78,7 @@
     <div class="sm:col-span-4 sm:col-start-1">
       <shared-store-input
         [control]="userForm.controls.address.controls.suite"
+        formControlName="suite"
         label="Suite"
       />
     </div>
@@ -74,6 +87,7 @@
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.address.controls.city"
+        formControlName="city"
         label="City"
       />
     </div>
@@ -82,28 +96,34 @@
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.address.controls.zipcode"
+        formControlName="zipcode"
         autocomplete="postal-code"
         label="ZIP / Postal code"
       />
     </div>
     
     <!-- Geo -->
-    <div class="sm:col-span-4">
+    <div class="sm:col-span-4" [formGroup]="GeoGroup">
       <shared-store-input
         [control]="userForm.controls.address.controls.geo.controls.lng"
+        formControlName="lng"
         label="Geo"
       />
     </div>
   </div>
 
 
+
+
+  <!-- Group Object Company Container -->
   <h2 class="mt-6 text-base font-semibold leading-7 text-white">Company Information</h2>
   <p class="mt-1 text-sm leading-6 text-gray-400">Add the company information.</p>
-  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="CompanyGroup">
     <!-- Company -->
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.company.controls.name"
+        formControlName="name"
         autocomplete="organization"
         label="Company name"
       />
@@ -113,6 +133,7 @@
     <div class="sm:col-span-4">
       <shared-store-input
         [control]="userForm.controls.company.controls.catchPhrase"
+        formControlName="catchPhrase"
         label="Catch phrase"
       />
     </div>
@@ -125,7 +146,12 @@
       />
     </div>
   </div>
-  
+
+
+
+
+
+
 
 
 

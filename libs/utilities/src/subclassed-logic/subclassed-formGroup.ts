@@ -13,7 +13,10 @@ import {
   ɵOptionalKeys
 } from "@angular/forms";
 
-export class SublcassedFormGroup<TControl extends { [K in keyof TControl]: AbstractControl<any> } = any> extends FormGroup<TControl> {
+
+
+
+export class SubclassedFormGroup<TControl extends { [K in keyof TControl]: AbstractControl<any>; } = any> extends FormGroup<TControl> {
   /**
    * Creates a new `FormGroup` instance.
    *

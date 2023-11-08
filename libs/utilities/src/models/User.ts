@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 import { Address, AddressForm, generateAddress } from './Address';
-import { SublcassedFormGroup } from '../subclassed-logic/subclassed-formGroup';
+import { SubclassedFormGroup } from '../subclassed-logic/subclassed-formGroup';
 
 export interface User {
   id: number;
@@ -22,10 +22,10 @@ export interface UserForm {
   name: FormControl<string>;
   username: FormControl<string>;
   email: FormControl<string>;
-  address: SublcassedFormGroup<AddressForm>;
+  address: SubclassedFormGroup<AddressForm>;
   phone: FormControl<string>;
   website: FormControl<string>;
-  company: SublcassedFormGroup<{
+  company: SubclassedFormGroup<{
     name: FormControl<string>;
     catchPhrase: FormControl<string>;
     bs: FormControl<string>;

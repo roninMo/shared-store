@@ -3,7 +3,7 @@
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, ɵElement } from "@angular/forms";
 import { DestroyRef } from '@angular/core';
 import { SubclassedForm } from "./subclassed-form.interface";
-import { SublcassedFormGroup } from "./subclassed-formGroup";
+import { SubclassedFormGroup } from "./subclassed-formGroup";
 import { SubclassedFormBuilder } from "./subclassed-formBuilder";
 import { SubclassedFormControl } from "./subclassed-formControl";
 
@@ -25,7 +25,7 @@ type AbstractControlProperties<T> = { [K in keyof T]: AbstractControl<any, any>;
 // }>;
 
 export class SubclassedFormFactory<T extends AbstractControlProperties<T> = any> implements SubclassedForm<T> {
-  protected _form: SublcassedFormGroup<T>;
+  protected _form: SubclassedFormGroup<T>;
   
   constructor(
       protected ref: DestroyRef, 
@@ -38,7 +38,7 @@ export class SubclassedFormFactory<T extends AbstractControlProperties<T> = any>
   }
 
   buildForm(defaultValues: T | any,  controlValidations: AbstractControlOptions = {}, groupValidations: AbstractControlOptions = {}): 
-    SublcassedFormGroup<T> 
+    SubclassedFormGroup<T> 
   {
     const formValues: any = {};
     for (const property in defaultValues) {
@@ -49,7 +49,7 @@ export class SubclassedFormFactory<T extends AbstractControlProperties<T> = any>
       }
     }
 
-    const form: SublcassedFormGroup = this.fb.group<T>(formValues, groupValidations);
+    const form: SubclassedFormGroup = this.fb.group<T>(formValues, groupValidations);
     return form;
   }
 
@@ -65,7 +65,7 @@ export class SubclassedFormFactory<T extends AbstractControlProperties<T> = any>
     console.log("complicated business logic here (i don't know what to add to these subclassed functions");
   }
 
-  public get form(): SublcassedFormGroup {
+  public get form(): SubclassedFormGroup {
     return this?._form;
   }
 }

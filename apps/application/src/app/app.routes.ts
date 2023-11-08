@@ -19,6 +19,7 @@ import {
 } from '@shared-store/shared-store';
 import { HomePageComponent } from './pages/HomePage/home-page.component';
 import { UsersPageComponent } from './pages/UsersPage/users-page.component';
+import { FormControlsComponent } from './pages/input/FormControls.component';
 
 const storeProviders: (Provider | EnvironmentProviders)[]  = [
   // Users
@@ -49,6 +50,11 @@ export const appRoutes: Route[] = [
   {
     path: 'users',
     component: UsersPageComponent,
+    providers: storeProviders
+  },
+  {
+    path: 'formControls',
+    component: FormControlsComponent,
     providers: storeProviders
   },
 

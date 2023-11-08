@@ -21,9 +21,19 @@
       Introduction
     </h1>
 
-    <p class="mt-4 mb-16 text-md text-slate-400">
-      This let's you access and edit a user's form without having to handle the api. It also updates the state on our own backend while you update this information.
+    <p class="mt-4 text-md text-slate-400">
+      This is still in progess, but it's for practicing design patterns and keeping data in sync while the user enters information in the form.
+      It also updates the state on our own backend while you update this information. 
+      This application gathers all the information for a specific user and stores in angular's redux store. 
+      It's got all the basic api routes in place and a backend to play around and figure out different ways to send/update information either on update or submit.
     </p>
+    <p class="mb-16 text-md text-slate-400">
+      <br />
+      This frontend is pretty straightforward and uses Angular store / Ngrx / Strongly typed forms / and hands free design patterns to capture and customize information
+      The backend is built in express and uses the base routes with objection for handling a mySql database, and middleware error handling
+    </p>
+
+    <shared-store-users-page />
 
     <!-- Get User information -->
     <h1 id="user-information" class="mt-24 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
@@ -49,8 +59,9 @@
       
       <shared-store-user-form 
         [userForm]="userForm"
-        />
-      </div>
+        [userFormFactory]="userFormFactory"
+      />
+    </div>
 
   </div>
 

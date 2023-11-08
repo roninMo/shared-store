@@ -1,0 +1,45 @@
+<div class="flex-auto">
+  <div class="rounded-md bg-blue-200 p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-blue-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3 flex-1 md:flex md:justify-start gap-sm">
+          This project is a full stack application that's spun up for practice, here's the code
+          <a href="https://github.com/roninMo/shared-store" class="text-blue-600 underline hover:text-blue-900 cursor-pointer">
+            here
+          </a>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="mx-auto max-w-3xl mt-10 mb-24 text-base leading-7 text-gray-400">
+    <h1 id="introduction" class="mt-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
+      Form values
+    </h1>
+
+    <p class="mt-4 mb-16 text-md text-slate-400">
+      
+    </p>
+    
+    
+    
+    
+    <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="updateUserFormFactory.form">
+      <!-- First name -->
+      <div class="sm:col-span-4">
+        <shared-store-input 
+        label="First name"
+        [control]="updatedUserForm.controls.name"
+        formControlName="name"
+        />
+        <!-- Adding the control to the input directly seems to make angular add the default binding instead of the custom logic -->
+      </div>
+    </div>
+    
+    
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   UserInformationComponent,
@@ -7,10 +7,14 @@ import {
   ButtonComponent,
 } from '@shared-store/components';
 import {
-  AddressForm,
   Countries,
+  SubclassedFormBuilder,
+  SubclassedFormFactory,
+  SubclassedFormGroup,
   User,
   UserForm,
+  emptyUser,
+  generateUser,
 } from '@shared-store/utilities';
 import { UsersPageComponent } from '../UsersPage/users-page.component';
 import {
@@ -45,58 +49,21 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
 })
 export class HomePageComponent {
-  // TODO: Let's create the form with a good class implementation to initialize each of the forms
+  protected readonly destroy: DestroyRef = inject(DestroyRef);
+  userFormFactory: SubclassedFormFactory<UserForm>;
+  userForm: SubclassedFormGroup<UserForm>;
   countries: string[] = Countries;
-  userForm!: FormGroup<UserForm>;
+
+  // random warm up logic
   users: Observable<Dictionary<User>>;
   user: Observable<User> | null;
 
-  constructor(protected fb: FormBuilder, protected store: Store) {
-    this.createUserForm();
+  constructor(protected fb: SubclassedFormBuilder, protected store: Store) {
+    this.userFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
+    this.userForm = this.userFormFactory.form;
     console.log('user form: ', this.userForm);
     this.users = store.select(selectUsersEntities).pipe(takeUntilDestroyed());
     this.user = store.select(selectSelectedUser) as Observable<User>;
-  }
-
-  protected createUserForm(): void {
-    const formGroupOptions: AbstractControlOptions = {
-      validators: [],
-      asyncValidators: [],
-      updateOn: 'change',
-    };
-
-    const addressGroup: FormGroup<AddressForm> = this.fb.group<AddressForm>(
-      {
-        street: new FormControl(),
-        suite: new FormControl(),
-        city: new FormControl(),
-        zipcode: new FormControl(),
-        country: new FormControl(),
-        geo: new FormGroup({
-          lat: new FormControl(),
-          lng: new FormControl(),
-        }),
-      },
-      formGroupOptions
-    );
-
-    this.userForm = this.fb.group<UserForm>(
-      {
-        id: new FormControl(),
-        name: new FormControl(),
-        username: new FormControl(),
-        email: new FormControl(),
-        address: addressGroup,
-        phone: new FormControl(),
-        website: new FormControl(),
-        company: new FormGroup({
-          name: new FormControl(),
-          catchPhrase: new FormControl(),
-          bs: new FormControl(),
-        }),
-      },
-      formGroupOptions
-    );
   }
 
   protected printUsers(): void {

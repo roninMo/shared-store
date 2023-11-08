@@ -12,9 +12,11 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { Dictionary } from '@ngrx/entity';
-import { UserForm, User, Post, SubclassedFormFactory, SublcassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder } from '@shared-store/utilities';
+import { UserForm, User, Post, SubclassedFormFactory, SubclassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder } from '@shared-store/utilities';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -35,11 +37,13 @@ import { PostComponent } from './Post/Post.component';
   imports: [
     CommonModule,
     CommentsComponent,
+    ReactiveFormsModule,
     PostComponent,
     InputComponent,
     ButtonComponent,
     UserInformationComponent,
     UserFormComponent,
+    UsersPageComponent,
   ],
 })
 export class UsersPageComponent {
@@ -55,11 +59,11 @@ export class UsersPageComponent {
   addUserFormFactory: SubclassedFormFactory<UserForm>;
   updateUserFormFactory: SubclassedFormFactory<UserForm>;
 
-  get addUserForm(): SublcassedFormGroup<UserForm> {
+  get addUserForm(): SubclassedFormGroup<UserForm> {
     return this.addUserFormFactory.form;
   }
 
-  get updateUserForm(): SublcassedFormGroup<UserForm> {
+  get updateUserForm(): SubclassedFormGroup<UserForm> {
     return this.updateUserFormFactory.form;
   }
 
@@ -108,7 +112,7 @@ export class UsersPageComponent {
     this.updateUserForm.reset();
   }
 
-  protected addDummyId(form: SublcassedFormGroup<UserForm>, id = 11): void {
+  protected addDummyId(form: SubclassedFormGroup<UserForm>, id = 11): void {
     if (form) {
       form.controls.id.setValue(id);
     }
