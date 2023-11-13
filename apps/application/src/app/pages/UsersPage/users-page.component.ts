@@ -14,9 +14,10 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Dictionary } from '@ngrx/entity';
-import { UserForm, User, Post, SubclassedFormFactory, SubclassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder } from '@shared-store/utilities';
+import { UserForm, User, Post, SubclassedFormFactory, SubclassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder, userRequiredValidator, controlValidation } from '@shared-store/utilities';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -56,8 +57,18 @@ export class UsersPageComponent {
   currentPost = 1;
 
   // Form
-  addUserFormFactory: SubclassedFormFactory<UserForm>;
   updateUserFormFactory: SubclassedFormFactory<UserForm>;
+  addUserFormFactory: SubclassedFormFactory<UserForm>;
+  userFormControlValidations: AbstractControlOptions = {
+    validators: [controlValidation],
+    asyncValidators: [],
+    updateOn: 'change',
+  };
+  userFormGroupValidations: AbstractControlOptions = {
+    validators: [userRequiredValidator],
+    asyncValidators: [],
+    updateOn: 'change',
+  };
 
   get addUserForm(): SubclassedFormGroup<UserForm> {
     return this.addUserFormFactory.form;
@@ -71,8 +82,8 @@ export class UsersPageComponent {
 
   constructor(protected fb: SubclassedFormBuilder, protected store: Store) {
     // Forms
-    this.addUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
-    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
+    this.addUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
+    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
     this.activeUserId = new FormControl(0, { nonNullable: true });
     console.info('user form factory: ', { addUser: this.addUserFormFactory, updateUser: this.updateUserFormFactory });
     

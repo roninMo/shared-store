@@ -10,7 +10,6 @@ import {
 
 
 export class SubclassedFormControl<TValue = any> extends FormControl {
-  
   constructor(
       // formState and defaultValue will only be null if T is nullable
       formState: FormControlState<TValue>|TValue = null as unknown as TValue,

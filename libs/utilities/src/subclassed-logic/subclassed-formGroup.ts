@@ -12,11 +12,14 @@ import {
   FormGroup,
   ɵOptionalKeys
 } from "@angular/forms";
+import { SubclassedFormFactory } from "./subclassed-form-factory";
 
 
 
 
 export class SubclassedFormGroup<TControl extends { [K in keyof TControl]: AbstractControl<any>; } = any> extends FormGroup<TControl> {
+  public formFactory?: SubclassedFormFactory<TControl>;
+
   /**
    * Creates a new `FormGroup` instance.
    *
@@ -33,12 +36,15 @@ export class SubclassedFormGroup<TControl extends { [K in keyof TControl]: Abstr
   constructor(
     controls: TControl, 
     validatorOrOpts?: ValidatorFn|ValidatorFn[]|AbstractControlOptions|null, 
-    asyncValidator?: AsyncValidatorFn|AsyncValidatorFn[]|null
+    asyncValidator?: AsyncValidatorFn|AsyncValidatorFn[]|null,
+    formFactory?: SubclassedFormFactory<TControl>
   ) {
     super(controls, validatorOrOpts, asyncValidator);
     this.controls = controls;
     
-    // Handle initializing the state and other values you want attached here, whether this is observables for custom validation or other things
+    if (formFactory) {
+      this.formFactory = formFactory;
+    }
   }
 
   override updateValueAndValidity(opts?: { onlySelf?: boolean | undefined; emitEvent?: boolean | undefined; } | undefined): void {
