@@ -16,6 +16,7 @@ import {
   Observable,
   debounceTime,
   interval,
+  skip,
   switchMap,
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -36,6 +37,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() control: FormControl = new FormControl('');
+  @Input() controlName = '';
   @Input() autocomplete = '';
   @Input() label = '';
 
@@ -47,24 +49,28 @@ export class InputComponent implements ControlValueAccessor {
   constructor() {
     // This only activates an update to a value and broadcasts it after the user has finished entering keys
     this._value
-      .pipe(takeUntilDestroyed(), debounceTime(430))
+      .pipe(skip(2), takeUntilDestroyed()) // This skips the initial subscription and the control value accessor binding so we achieve updating every interval instead of keypress
       .subscribe((input) => {
-        // console.log('\npropagating value: ', input);
+        this.control.markAsTouched({ onlySelf: true });
         this.propagateChange(input);
+        console.log('\npropagating value: ', {
+          value: input, control: this.control, propagateChangeFunction: this.propagateChange, propagateTouchedFunction: this.propagateTouched
+        });
       });
   }
 
   onChange(event: any): void {
     // This let's you have access to when you send values to the form and right now we're just using subscriptions to handle this
     const value = event?.target?.value;
-    if (value) {
+    // if (value) {
       this._value.next(value);
-    }
+    // }
   }
   
   onBlur(event: any): void {
     // TODO: you should create an event emitter here to capture these events otherwise it's not necessary
-    // const value = event?.target?.value;
+    const value = event?.target?.value;
+    this._value.next(value);
     // if (value) {
     //   console.log('input onBlur: ', value);
     //   this.propagateChange(value);
@@ -77,7 +83,7 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   registerOnChange(fn: any): void {
-    // console.log('registering the propagateChange function', fn);
+    // console.log('registering the propagateChange function', fn); // Make sure these are binding to angular's directives, otherwise they don't update input events and break everything
     this.propagateChange = fn;
   }
 

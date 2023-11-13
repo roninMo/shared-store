@@ -18,7 +18,7 @@ import { SubclassedFormFactory } from "./subclassed-form-factory";
 
 
 export class SubclassedFormGroup<TControl extends { [K in keyof TControl]: AbstractControl<any>; } = any> extends FormGroup<TControl> {
-  public formFactory?: SubclassedFormFactory<TControl>;
+  public formFactory: SubclassedFormFactory<TControl> | null = null;
 
   /**
    * Creates a new `FormGroup` instance.

@@ -7,14 +7,14 @@ export function userRequiredValidator(): ValidatorFn {
   return (control: AbstractControl<UserForm>): ValidationErrors | null => {
     console.log('form group: ', control); 
 
-    return null;
+    return { groupValidation: { value: control.value } };
   };
 }
 
 export function controlValidation(): ValidatorFn {
-  return (control: AbstractControl<UserForm>): ValidationErrors | null => {
+  return (control: AbstractControl): ValidationErrors | null => {
     console.log('control: ', control);
 
-    return null;
+    return { controlValidation: { value: control.value } };
   }
 }

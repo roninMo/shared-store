@@ -16,30 +16,23 @@ import {
   ɵElement,
 } from '@angular/forms';
 import { SubclassedFormControl } from './subclassed-formControl';
-
-
-function isAbstractControlOptions(options: AbstractControlOptions | { [key: string]: any } | null | undefined): options is AbstractControlOptions {
-  return (
-    !!options &&
-    ((options as AbstractControlOptions).asyncValidators !== undefined ||
-      (options as AbstractControlOptions).validators !== undefined ||
-      (options as AbstractControlOptions).updateOn !== undefined)
-  );
-}
+import { FormFactoryControlOptions, SubclassedFormFactory } from './subclassed-form-factory';
 
 
 @Injectable({providedIn: 'root'})
 export class SubclassedFormBuilder extends FormBuilder {
-  override group<T extends {}>(controls: T, options?: AbstractControlOptions | null): FormGroup<{ [K in keyof T]: ɵElement<T[K], null> }>;
-  override group(              controls: { [key: string]: any }, options: { [key: string]: any }): FormGroup;
-  override group(              controls: { [key: string]: any }, options: AbstractControlOptions | { [key: string]: any } | null = null
-  ): FormGroup {
+  override group<T extends {}>(controls: T, options?: FormFactoryControlOptions | null): SubclassedFormGroup<{ [K in keyof T]: ɵElement<T[K], null> }>;
+  override group(              controls: { [key: string]: any }, options: { [key: string]: any }): SubclassedFormGroup;
+  override group(              controls: { [key: string]: any }, options: FormFactoryControlOptions | { [key: string]: any } | null = null
+  ): SubclassedFormGroup {
     // code for handling validations of old form group options
     const reducedControls = this._reduceControls(controls);
     let newOptions: FormControlOptions = {};
-    if (isAbstractControlOptions(options)) {
+    let formFactory: SubclassedFormFactory | undefined;
+    if (isFormFactoryControlOptions(options)) {
       // `options` are `AbstractControlOptions`
       newOptions = options;
+      formFactory = options.formFactory;
     } else if (options !== null) {
       // `options` are legacy form group options
       newOptions.validators = (options as any).validator;
@@ -47,7 +40,7 @@ export class SubclassedFormBuilder extends FormBuilder {
     }
 
     // console.log('form group construction values: ', { reducedControls, newOptions });
-    return new SubclassedFormGroup(reducedControls, newOptions);
+    return new SubclassedFormGroup(reducedControls, newOptions, null, formFactory);
   }
 
 
@@ -112,4 +105,23 @@ export class SubclassedFormBuilder extends FormBuilder {
       return this.control<T>(controls);
     }
   }
+}
+
+
+function isAbstractControlOptions(options: AbstractControlOptions | { [key: string]: any } | null | undefined): options is AbstractControlOptions {
+  return (
+    !!options &&
+    ((options as AbstractControlOptions).asyncValidators !== undefined ||
+      (options as AbstractControlOptions).validators !== undefined ||
+      (options as AbstractControlOptions).updateOn !== undefined)
+  );
+}
+
+function isFormFactoryControlOptions(options: FormFactoryControlOptions | { [key: string]: any } | null | undefined): options is FormFactoryControlOptions {
+  return (
+    !!options &&
+    ((options as FormFactoryControlOptions).asyncValidators !== undefined ||
+      (options as FormFactoryControlOptions).validators !== undefined ||
+      (options as FormFactoryControlOptions).updateOn !== undefined)
+  );
 }

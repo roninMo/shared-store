@@ -12,7 +12,13 @@
     [autocomplete]="autocomplete"
     (blur)="onBlur($event)"
     (input)="onChange($event)"
-    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-    />
-    <!-- [formControl]="control" -->
+    [className]="control.touched && control.errors
+    ? 'block w-full rounded-md border-1 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-red-600 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
+    : 'block w-full rounded-md border-1 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
+    "
+  />
+</div>
+
+<div *ngIf="control.errors && control.touched" class="p-1 text-sm text-red-400">
+  <div *ngIf="control.errors['required']">value is required</div>
 </div>

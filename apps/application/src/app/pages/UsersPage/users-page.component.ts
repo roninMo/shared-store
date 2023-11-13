@@ -60,7 +60,7 @@ export class UsersPageComponent {
   updateUserFormFactory: SubclassedFormFactory<UserForm>;
   addUserFormFactory: SubclassedFormFactory<UserForm>;
   userFormControlValidations: AbstractControlOptions = {
-    validators: [controlValidation],
+    validators: [Validators.required],
     asyncValidators: [],
     updateOn: 'change',
   };

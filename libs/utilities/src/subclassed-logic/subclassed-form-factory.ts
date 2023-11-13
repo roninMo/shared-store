@@ -7,13 +7,17 @@ import { SubclassedFormGroup } from "./subclassed-formGroup";
 import { SubclassedFormBuilder } from "./subclassed-formBuilder";
 import { SubclassedFormControl } from "./subclassed-formControl";
 
-export const defaultFormOptions: AbstractControlOptions = {
+export interface FormFactoryControlOptions extends AbstractControlOptions {
+  formFactory?: SubclassedFormFactory;
+};
+
+export const defaultFormOptions: FormFactoryControlOptions = {
   validators: [],
   asyncValidators: [],
   updateOn: 'change',
 };
 
-export const updateFormOptions: AbstractControlOptions = {
+export const updateFormOptions: FormFactoryControlOptions = {
   validators: [],
   asyncValidators: [],
   updateOn: 'change'
@@ -43,13 +47,19 @@ export class SubclassedFormFactory<T extends AbstractControlProperties<T> = any>
     const formValues: any = {};
     for (const property in defaultValues) {
       if (typeof defaultValues[property] !== 'object') {
-        formValues[property] = new SubclassedFormControl(defaultValues[property], controlValidations);
+        const formControl: SubclassedFormControl = new SubclassedFormControl(defaultValues[property], controlValidations);
+        formControl.formFactory = this;
+        formValues[property] = formControl;
       } else {
         formValues[property] = this.buildForm(defaultValues[property], controlValidations, groupValidations);
       }
     }
 
-    const form: SubclassedFormGroup = this.fb.group<T>(formValues, groupValidations);
+    const abstractGroupOptions: FormFactoryControlOptions = {
+      ...groupValidations,
+      formFactory: this
+    }
+    const form: SubclassedFormGroup = this.fb.group<T>(formValues, abstractGroupOptions);
     return form;
   }
 
