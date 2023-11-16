@@ -3,11 +3,11 @@ import { DestroyRef } from "@angular/core";
 import { AbstractControlOptions } from "@angular/forms";
 import { ApiService } from "../api.service";
 import { UserValidationInformation, AbstractControlProperties, defaultFormOptions, SubclassedFormFactory } from "./subclassed-form-factory";
+import { UserForm, expressApiRoute_Base } from "..";
 import { SubclassedFormBuilder } from "./subclassed-formBuilder";
 import { SubclassedFormGroup } from "./subclassed-formGroup";
 import { SubclassedFormControl } from "./subclassed-formControl";
-import { UserForm, jsonApiRoute_Base } from "..";
-import { catchError, take } from "rxjs";
+import { take } from "rxjs";
 
 
 
@@ -37,7 +37,7 @@ export class UserFormFactory extends SubclassedFormFactory<UserForm> {
       };
 
       this.httpClient
-        .post<UserValidationInformation>(`${jsonApiRoute_Base}/user/${userId}/validatevalues`, validationInformation).pipe(take(1))
+        .post<UserValidationInformation>(`${expressApiRoute_Base}/users/${userId}/validatevalues`, validationInformation).pipe(take(1))
         .subscribe(value => {
           console.log('api response: ', value);
         });

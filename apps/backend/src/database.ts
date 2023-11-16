@@ -89,6 +89,18 @@ export const createDb = async (knex) => {
     });
   }
 
+  if (!(await knex.schema.hasTable('comment'))) {
+    createDatabase = true;
+    console.log('the comment table has not yet been initialized');
+    schema.createTable('comment', (table) => {
+      table.increments('id').primary();
+      table.integer('postId');
+      table.string('email');
+      table.string('name');
+      table.string('body');
+    })
+  }
+
   if (createDatabase) {
     console.log('creating the database!');
     return await schema;

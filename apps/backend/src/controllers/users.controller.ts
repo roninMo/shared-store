@@ -2,6 +2,7 @@ import express from 'express';
 import { db } from '../database';
 import { User, UserValidationInformation, UserValidationResponse } from '../models/User';
 import { Address } from '../models/Address';
+import { Comment } from '../models/Comment';
 import { Todo } from '../models/Todos';
 import { Post } from '../models/Post';
 import { db_validAddress, db_validUser, constructUser, extractAddress, extractUser } from '../utilities/utils';
@@ -79,6 +80,9 @@ router.get('/:id/information', async (request, response, next) => {
       const address = await Address.query().findById(user.addressId);
       const todos = await Todo.query().where('userId', userId);
       const posts = await Post.query().where('userId', userId);
+      // const posts = await Post.query()
+      //   .select('*')
+      //   .leftJoin('comment as comments', 'post.id', 'comments.postId');
 
       response.json({ status: 200, message: 'user information', 
         user: {...user, address}, todos, posts
@@ -212,7 +216,7 @@ router.post('/:id/validatevalues', async (request, response, next) => {
 
       console.log('updateInformation: ', updateInformationValues);
 
-      // I don't have intuitive logic in place for handling object values to access different keys based on a specific id and this logic is dummy logic just to build a connection for validations on this side also 
+      // This logic is dummy logic just to build a connection for validations on this side 
       if (updateInformationValues.key && updateInformationValues.value) {
         // name - no numbers
         if (updateInformationValues.key == 'name') {

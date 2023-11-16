@@ -56,7 +56,7 @@ export const generateUser = (data: Partial<User> = {}, address: Partial<Address>
 };
 
 export const emptyUser: User = {
-  id: 0,
+  id: 1,
   name: '',
   username: '',
   email: '',
