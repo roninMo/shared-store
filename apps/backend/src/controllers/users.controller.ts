@@ -208,53 +208,40 @@ router.post('/:id/validatevalues', async (request, response, next) => {
   try {
     const userId = request.params.id;
     const user = await User.query().findById(userId);
+    
     console.log('user information: ', user);
-
     if (user && request.body) {
       const updateInformationValues: UserValidationInformation = request.body;
-      let validationResponses: UserValidationResponse;
+      let validation: UserValidationResponse;
 
       console.log('updateInformation: ', updateInformationValues);
-
       // This logic is dummy logic just to build a connection for validations on this side 
       if (updateInformationValues.key && updateInformationValues.value) {
         // name - no numbers
         if (updateInformationValues.key == 'name') {
           const noNumbersOrSpecialCharacters = new RegExp('^[a-zA-Z]*$');
-          validationResponses = {
-            ...updateInformationValues,
-            validation: noNumbersOrSpecialCharacters.test(updateInformationValues.value) ? 'valid' : 'invalid'
-          };
+          validation = noNumbersOrSpecialCharacters.test(updateInformationValues.value) ? null : 'enter a valid name';
         }
 
         // phone - this needs to have the proper format
         if (updateInformationValues.key == 'phone') {
           const tenDigitNumberValidation = new RegExp('^[0-9]{10}$'); // Actual validations can be handled on the client
-          validationResponses = {
-            ...updateInformationValues,
-            validation: tenDigitNumberValidation.test(updateInformationValues.value) ? 'valid' : 'invalid'
-          };
+          validation = tenDigitNumberValidation.test(updateInformationValues.value) ? null : 'the phone number is invalid';
         }
 
         // username - validations and rules for this
         if (updateInformationValues.key == 'username') {
           // If username is not already taken
           const noNumbersOrSpecialCharacters = new RegExp('^[a-zA-Z]*$');
-          validationResponses = {
-            ...updateInformationValues,
-            validation: noNumbersOrSpecialCharacters.test(updateInformationValues.value) ? 'valid' : 'invalid'
-          };
+          validation = noNumbersOrSpecialCharacters.test(updateInformationValues.value) ? null : 'the username is invalid';
         }
 
         // email address - email validations
         if (updateInformationValues.key == 'email') {
-          validationResponses = {
-            ...updateInformationValues,
-            validation: 'valid'
-          };
+          validation = null;
         }
 
-        response.json({ status: 200, validation: validationResponses });
+        response.json({ status: 200, validation });
       }
       else
       {

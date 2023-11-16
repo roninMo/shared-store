@@ -15,6 +15,7 @@ import {
   UserForm,
   emptyUser,
   generateUser,
+  ApiService,
 } from '@shared-store/utilities';
 import { UsersPageComponent } from '../UsersPage/users-page.component';
 import {
@@ -27,7 +28,6 @@ import { UserFormComponent } from '../UsersPage/UserForm/UserForm/user-form.comp
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
-  ApiService,
   selectSelectedUser,
   selectUsersEntities,
 } from '@shared-store/shared-store';

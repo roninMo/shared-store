@@ -7,8 +7,8 @@ import { ReactiveFormsModule, AbstractControlOptions, Validators, FormControl } 
 import { RouterModule } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TabValue, TabsComponent } from "@shared-store/components";
-import { selectSelectedUser, selectAllUserPosts, ApiService } from "@shared-store/shared-store";
-import { AddressPipe, User, Post, UserFormFactory, UserForm, controlValidation, SubclassedFormBuilder, generateUser, emptyUser, SubclassedFormControl } from "@shared-store/utilities";
+import { selectSelectedUser, selectAllUserPosts } from "@shared-store/shared-store";
+import { AddressPipe, User, Post, UserFormFactory, controlValidation, SubclassedFormBuilder, generateUser, emptyUser, SubclassedFormControl, ApiService } from "@shared-store/utilities";
 import { Observable, take } from "rxjs";
 import { AddUserFormComponent } from "./AddUserForm/AddUserForm.component";
 import { UpdateUserFormComponent } from "./UpdateUserForm/UpdateUserForm.component";

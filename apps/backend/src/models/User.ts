@@ -70,11 +70,7 @@ export interface UserValidationInformation extends UserValidationBase {
   value: string 
 };
 
-export type ValidationStatus = 'valid' | 'hidden' | 'invalid';
-export interface UserValidationResponse extends UserValidationInformation { 
-  validation: ValidationStatus 
-};
-
+export type UserValidationResponse = string;
 export type UserKeys = keyof User;
 
 

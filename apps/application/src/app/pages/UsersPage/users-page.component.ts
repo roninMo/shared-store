@@ -17,11 +17,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Dictionary } from '@ngrx/entity';
-import { UserForm, User, Post, UserFormFactory, SubclassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder, userRequiredValidator, controlValidation } from '@shared-store/utilities';
+import { UserForm, User, Post, UserFormFactory, SubclassedFormGroup, generateUser, emptyUser, SubclassedFormBuilder, userRequiredValidator, controlValidation, ApiService } from '@shared-store/utilities';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  ApiService,
   UserActions,
   selectAllUserPosts,
   selectSelectedUser,

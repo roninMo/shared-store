@@ -23,4 +23,5 @@
 
 <div *ngIf="control.errors && control.touched" class="p-1 text-sm text-red-400">
   <div *ngIf="control.errors['required']">value is required</div>
+  <div *ngIf="control.errors['serverValidation']">{{ control.errors['serverValidation'] }}</div>
 </div>

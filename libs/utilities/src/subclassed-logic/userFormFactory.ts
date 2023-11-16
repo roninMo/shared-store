@@ -3,13 +3,16 @@ import { DestroyRef } from "@angular/core";
 import { AbstractControlOptions } from "@angular/forms";
 import { ApiService } from "../api.service";
 import { UserValidationInformation, AbstractControlProperties, defaultFormOptions, SubclassedFormFactory } from "./subclassed-form-factory";
-import { UserForm, expressApiRoute_Base } from "..";
+import { UserForm, Writable, expressApiRoute_Base } from "..";
 import { SubclassedFormBuilder } from "./subclassed-formBuilder";
 import { SubclassedFormGroup } from "./subclassed-formGroup";
 import { SubclassedFormControl } from "./subclassed-formControl";
 import { take } from "rxjs";
 
-
+export interface UserValidationResponse {
+  validation: string;
+  status: number;
+}
 
 export class UserFormFactory extends SubclassedFormFactory<UserForm> {
   protected override _form!: SubclassedFormGroup<UserForm>;
@@ -37,9 +40,18 @@ export class UserFormFactory extends SubclassedFormFactory<UserForm> {
       };
 
       this.httpClient
-        .post<UserValidationInformation>(`${expressApiRoute_Base}/users/${userId}/validatevalues`, validationInformation).pipe(take(1))
-        .subscribe(value => {
-          console.log('api response: ', value);
+        .post<UserValidationResponse>(`${expressApiRoute_Base}/users/${userId}/validatevalues`, validationInformation).pipe(take(1))
+        .subscribe((value: UserValidationResponse) => {
+          const editableControl = control as Writable<SubclassedFormControl>;
+          // console.log('api response: ', value);
+          if (value.validation) {
+            editableControl.errors = {
+              ...control.errors,
+              serverValidation: value.validation
+            };
+          } else if (editableControl.errors && editableControl.errors['serverValidation']) {
+            delete editableControl.errors['serverValidation'];
+          }
         });
     }
   }

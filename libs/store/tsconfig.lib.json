@@ -13,5 +13,5 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": ["src/**/*.ts", "../utilities/src/api.service.ts"]
+  "include": ["src/**/*.ts", "../utilities/src/api.service.ts", "../utilities/src/api.service.spec.ts"]
 }
