@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbstractControlOptions, FormGroup } from '@angular/forms';
+import { SubclassedFormControl } from './subclassed-formControl';
 
 
 export interface SubclassedForm<T> {
@@ -8,12 +9,9 @@ export interface SubclassedForm<T> {
 
   get form(): FormGroup;
   
-  // OnSave -> overrided control value accesor functions should determine when you should actually save information to the database if you're sending that information on key press
+  // Manual function for sending information to the backend (this is for ease of access and let's you do this in a hands free way to make things less complicated)
   onSave(): void;
   
-  // Manual function for sending information to the backend (this is for ease of access and let's you do this in a hands free way to make things less complicated)
-  saveData(): void;
-  
   // update the values with backend validation
-  updateAndRunBackendValidations(): void;
+  updateAndRunBackendValidations(control: SubclassedFormControl): void;
 }

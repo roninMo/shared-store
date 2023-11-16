@@ -1,17 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { 
+  AbstractControl,
   AsyncValidatorFn, 
   FormControl, 
   FormControlOptions, 
   FormControlState, 
+  FormControlStatus, 
   ValidatorFn 
 } from "@angular/forms";
 import { SubclassedFormFactory } from "./subclassed-form-factory";
-
+import { Subscription, debounceTime } from "rxjs";
 
 
 export class SubclassedFormControl<TValue = any> extends FormControl {
   public formFactory: SubclassedFormFactory<any> | null = null;
+  public keyName!: string; // This is a hacky way to get around angular complex multiple constructors and convoluted typing
+
+  public apiSubscription!: Subscription;
 
   constructor(
       // formState and defaultValue will only be null if T is nullable
@@ -21,9 +26,13 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
       formFactory?: SubclassedFormFactory
   ) {
     super(formState, validatorOrOpts, asyncValidator);
-
     if (formFactory) {
       this.formFactory = formFactory;
+      this.apiSubscription = this.valueChanges.pipe(debounceTime(250)).subscribe(value => {
+        if (this.value && this.valid) {
+          this.formFactory?.updateAndRunBackendValidations(this);
+        }
+      });
     }
     // console.log('constructing form control: ', { formState, validatorOrOpts, asyncValidator });
   }
@@ -35,7 +44,7 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
     emitViewToModelChange?: boolean
   } = {}): void {
     super.setValue(value, options);
-    console.log('value set: ', value);
+    // console.log('value set: ', value);
   }
 
   override patchValue(value: TValue, options: {
@@ -53,9 +62,8 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
     super.reset(formState, options);
   }
 
-  override updateValueAndValidity(opts?: { onlySelf?: boolean; emitEvent?: boolean; }): void {
+  override updateValueAndValidity(opts?: { onlySelf?: boolean; emitEvent?: boolean;  }): void {
     super.updateValueAndValidity(opts);
-    // console.log('validatorOrOpts', this.validatorOrOpts);
-    // I think when angular merges the validator functions it removes console logging for some reason (even though I think it's just calculating each validation and merging the results together)
+    // console.log('validatorOrOpts', {opts, validator: this.validatorOrOpts});
   }
 }

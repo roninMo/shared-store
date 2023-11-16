@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ApiService } from '../api.service';
 import { PostsActions } from './posts.actions';
 import { UserActions } from '../users';
 import { catchError, concatMap, map, of } from 'rxjs';
-import { Post, jsonApiRoute_Base } from '@shared-store/utilities';
+import { ApiService, Post, jsonApiRoute_Base } from '@shared-store/utilities';
 
 
 

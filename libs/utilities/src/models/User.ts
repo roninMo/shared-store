@@ -50,6 +50,8 @@ export const generateUser = (data: Partial<User> = {}, address: Partial<Address>
     },
   };
 
+  console.log('generating user data: ', {user, data, address});
+
   return Object.assign(user, data);
 };
 

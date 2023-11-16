@@ -20,6 +20,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SubclassedFormControl } from '@shared-store/utilities';
 
 @Component({
   selector: 'shared-store-input',
@@ -49,9 +50,8 @@ export class InputComponent implements ControlValueAccessor {
   constructor() {
     // This only activates an update to a value and broadcasts it after the user has finished entering keys
     this._value
-      .pipe(skip(2), takeUntilDestroyed()) // This skips the initial subscription and the control value accessor binding so we achieve updating every interval instead of keypress
+      .pipe(skip(2), takeUntilDestroyed(), debounceTime(430)) // This skips the initial subscription and the control value accessor binding so we achieve updating every interval instead of keypress
       .subscribe((input) => {
-        this.control.markAsTouched({ onlySelf: true });
         this.propagateChange(input);
         console.log('\npropagating value: ', {
           value: input, control: this.control, propagateChangeFunction: this.propagateChange, propagateTouchedFunction: this.propagateTouched
@@ -70,6 +70,7 @@ export class InputComponent implements ControlValueAccessor {
   onBlur(event: any): void {
     // TODO: you should create an event emitter here to capture these events otherwise it's not necessary
     const value = event?.target?.value;
+    this.control.markAsTouched({ onlySelf: true });
     this._value.next(value);
     // if (value) {
     //   console.log('input onBlur: ', value);

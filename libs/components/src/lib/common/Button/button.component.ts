@@ -9,8 +9,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Output() OnClicked: EventEmitter<any> = new EventEmitter();
+  @Output() OnClicked: EventEmitter<void> = new EventEmitter();
   @Input() label = 'Submit Form';
+  @Input() disabled = false;
 
   protected OnButtonClicked(): void {
     // console.log('button was clicked');

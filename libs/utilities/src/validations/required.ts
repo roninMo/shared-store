@@ -5,7 +5,7 @@ import { UserForm } from "../models";
 
 export function userRequiredValidator(): ValidatorFn {
   return (control: AbstractControl<UserForm>): ValidationErrors | null => {
-    console.log('form group: ', control); 
+    console.log('\nform group: ', control); 
 
     return { groupValidation: { value: control.value } };
   };
@@ -13,7 +13,7 @@ export function userRequiredValidator(): ValidatorFn {
 
 export function controlValidation(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    console.log('control: ', control);
+    console.log('\ncontrol: ', control);
 
     return { controlValidation: { value: control.value } };
   }

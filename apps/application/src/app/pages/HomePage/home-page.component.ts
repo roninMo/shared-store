@@ -23,15 +23,17 @@ import {
   FormControl,
   FormGroup,
 } from '@angular/forms';
-import { UserFormComponent } from '../UsersPage/UserForm/user-form.component';
+import { UserFormComponent } from '../UsersPage/UserForm/UserForm/user-form.component';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
+  ApiService,
   selectSelectedUser,
   selectUsersEntities,
 } from '@shared-store/shared-store';
 import { Dictionary } from '@ngrx/entity';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserDataComponent } from '../UsersPage/UserForm/UserData.component';
 
 @Component({
   selector: 'shared-store-home-page',
@@ -46,6 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     SelectComponent,
     ButtonComponent,
     UserFormComponent,
+    UserDataComponent
   ],
 })
 export class HomePageComponent {
@@ -57,10 +60,10 @@ export class HomePageComponent {
   // random warm up logic
   users: Observable<Dictionary<User>>;
   user: Observable<User> | null;
-
-  constructor(protected fb: SubclassedFormBuilder, protected store: Store) {
-    this.userFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
-    this.userForm = this.userFormFactory.form;
+  
+  constructor(protected fb: SubclassedFormBuilder, protected httpClient: ApiService, protected store: Store) {
+    this.userFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser));
+    this.userForm = this.userFormFactory.subclassedForm;
     console.log('user form: ', this.userForm);
     this.users = store.select(selectUsersEntities).pipe(takeUntilDestroyed());
     this.user = store.select(selectSelectedUser) as Observable<User>;

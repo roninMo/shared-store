@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { InputComponent } from '@shared-store/components';
 import { AddressForm, SubclassedFormBuilder, SubclassedFormFactory, SubclassedFormGroup, UserForm, controlValidation, emptyUser, generateUser } from '@shared-store/utilities';
 import { FormBuilder, FormControl, FormControlOptions, FormControlState, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApiService } from '@shared-store/shared-store';
 
 // This was a component created to figure out a good way to use custom control value accessors with angular forms
 // You can add input update intervals to let the user typeahead before you validate or add your own custom logic that determines when you should submit values
@@ -24,9 +25,9 @@ export class FormControlsComponent {
   updateUserFormFactory: SubclassedFormFactory<UserForm>;
   updatedUserForm: SubclassedFormGroup<UserForm>;
 
-  constructor(protected fb: SubclassedFormBuilder) {
-    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser));
-    this.updatedUserForm = this.updateUserFormFactory.form;
+  constructor(protected fb: SubclassedFormBuilder, protected httpClient: ApiService) {
+    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser));
+    this.updatedUserForm = this.updateUserFormFactory.subclassedForm;
     console.log('constructed the form', this.updateUserFormFactory);
   }
 

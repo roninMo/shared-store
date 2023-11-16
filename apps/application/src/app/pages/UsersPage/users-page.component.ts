@@ -6,7 +6,7 @@ import {
   InputComponent,
   UserInformationComponent,
 } from '@shared-store/components';
-import { UserFormComponent } from './UserForm/user-form.component';
+import { UserFormComponent } from './UserForm/UserForm/user-form.component';
 import {
   AbstractControlOptions,
   FormBuilder,
@@ -21,6 +21,7 @@ import { UserForm, User, Post, SubclassedFormFactory, SubclassedFormGroup, gener
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
+  ApiService,
   UserActions,
   selectAllUserPosts,
   selectSelectedUser,
@@ -60,30 +61,30 @@ export class UsersPageComponent {
   updateUserFormFactory: SubclassedFormFactory<UserForm>;
   addUserFormFactory: SubclassedFormFactory<UserForm>;
   userFormControlValidations: AbstractControlOptions = {
-    validators: [Validators.required],
+    validators: [Validators.required, controlValidation],
     asyncValidators: [],
     updateOn: 'change',
   };
   userFormGroupValidations: AbstractControlOptions = {
-    validators: [userRequiredValidator],
+    validators: [],
     asyncValidators: [],
     updateOn: 'change',
   };
 
   get addUserForm(): SubclassedFormGroup<UserForm> {
-    return this.addUserFormFactory.form;
+    return this.addUserFormFactory.subclassedForm;
   }
 
   get updateUserForm(): SubclassedFormGroup<UserForm> {
-    return this.updateUserFormFactory.form;
+    return this.updateUserFormFactory.subclassedForm;
   }
 
   activeUserId: FormControl<number>;
 
-  constructor(protected fb: SubclassedFormBuilder, protected store: Store) {
+  constructor(protected fb: SubclassedFormBuilder, protected httpClient: ApiService, protected store: Store) {
     // Forms
-    this.addUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
-    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
+    this.addUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
+    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
     this.activeUserId = new FormControl(0, { nonNullable: true });
     console.info('user form factory: ', { addUser: this.addUserFormFactory, updateUser: this.updateUserFormFactory });
     
@@ -105,6 +106,8 @@ export class UsersPageComponent {
     const userInformation: User = this.addUserForm.getRawValue();
     this.store.dispatch(UserActions['[UserPage]AddUser']({ user: userInformation }));
     this.addUserForm.reset();
+    this.addDummyId(this.addUserForm);
+    this.addUserForm.markAsUntouched({ onlySelf: false });
   }
 
   deleteUser() {

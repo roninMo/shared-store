@@ -7,7 +7,7 @@ import { Address } from '../models';
 })
 export class AddressPipe implements PipeTransform {
   transform(address: Address, ...args: unknown[]): unknown {
-    if (!address) {
+    if (!address || !address?.street || !address?.city || !address?.zipcode) {
       return '';
     }
 

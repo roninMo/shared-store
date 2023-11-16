@@ -6,3 +6,4 @@ export * from './pipes';
 export * from './validations/index';
 export * from './subclassed-logic';
 export * from './test-setup';
+export * from './api.service';

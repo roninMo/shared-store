@@ -13,7 +13,7 @@ import {
   ɵOptionalKeys
 } from "@angular/forms";
 import { SubclassedFormFactory } from "./subclassed-form-factory";
-
+import { SubclassedFormControl } from "./subclassed-formControl";
 
 
 
@@ -60,7 +60,10 @@ export class SubclassedFormGroup<TControl extends { [K in keyof TControl]: Abstr
   }
 
 
-  override reset(value?: ɵTypedOrUntyped<TControl, ɵFormGroupValue<TControl>, any> | undefined, options?: Object | undefined): void {
+  override reset(value?: ɵTypedOrUntyped<TControl, ɵFormGroupValue<TControl>, any> | undefined, options?: {
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+  }): void {
     super.reset(value, options);
   }
 
@@ -78,8 +81,11 @@ export class SubclassedFormGroup<TControl extends { [K in keyof TControl]: Abstr
   override removeControl(this: FormGroup<{[key: string]: AbstractControl<any>}>, name: string, options?: { emitEvent?: boolean;}): void;
   override removeControl<S extends string>(name: ɵOptionalKeys<TControl>&S, options?: { emitEvent?: boolean;}): void;
   override removeControl(name: string, options: {emitEvent?: boolean;} = {}): void {
+    const formControl: SubclassedFormControl<any> = (this.controls as any)[name];
+    if (formControl && formControl?.apiSubscription) {
+      formControl.apiSubscription.unsubscribe();
+    }
+
     super.removeControl(name, options);
   }
-
-
 }

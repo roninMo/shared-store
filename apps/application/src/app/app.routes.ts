@@ -36,7 +36,7 @@ const storeProviders: (Provider | EnvironmentProviders)[]  = [
 
   // Todos
   provideState(TODOS_FEATURE_KEY, todoReducer),
-  provideEffects(TodoEffects)
+  provideEffects(TodoEffects),
 ];
 
 export const appRoutes: Route[] = [
@@ -46,21 +46,28 @@ export const appRoutes: Route[] = [
     pathMatch: 'full',
     component: HomePageComponent,
     providers: storeProviders,
+    // children: [
+    //   { path: '', redirectTo: 'information', pathMatch: 'full' },
+    //   { path: 'information', component: UserInformationComponent },
+    //   { path: 'add', component: AddUserFormComponent },
+    //   { path: 'remove', component: RemoveUserComponent },
+    //   { path: 'update', component: UpdateUserFormComponent },
+    // ]
   },
   {
     path: 'users',
     component: UsersPageComponent,
-    providers: storeProviders
+    providers: storeProviders,
   },
   {
     path: 'formControls',
     component: FormControlsComponent,
     providers: storeProviders
   },
-
+  
   // Redirects
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`
-  { path: 'user', redirectTo: '/users', pathMatch: 'full' }, // redirect to `first-component`
+  { path: 'user', redirectTo: '/users' }, // redirect to `first-component`
   // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
   { path: '**', component: HomePageComponent }, // Wildcard route for a 404 page
 ];

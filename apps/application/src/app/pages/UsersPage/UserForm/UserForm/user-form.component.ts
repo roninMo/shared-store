@@ -9,6 +9,7 @@ import {
   TextareaComponent,
 } from '@shared-store/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'shared-store-user-form',
@@ -25,19 +26,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   @Input() userFormFactory!: SubclassedFormFactory<UserForm>;
   @Input() userForm!: SubclassedFormGroup<UserForm>;
   @Input() submitFormLabel = 'Submit Form';
   countries: string[] = Countries;
 
-  ngOnInit(): void {
+  constructor() {
     if (this.userForm) {
       // console.log(
       //   'the user form component has been successfully initialized and the form has been passed down: ',
       //   this.userForm
       // );
+
+      this.userForm.valueChanges.pipe(takeUntilDestroyed()).subscribe(value => {
+        console.log('userForm updated ', { value, userForm: this.userForm });
+      });
     }
   }
 

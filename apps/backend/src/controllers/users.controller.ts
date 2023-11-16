@@ -1,6 +1,6 @@
 import express from 'express';
 import { db } from '../database';
-import { User } from '../models/User';
+import { User, UserValidationInformation, UserValidationResponse } from '../models/User';
 import { Address } from '../models/Address';
 import { Todo } from '../models/Todos';
 import { Post } from '../models/Post';
@@ -197,6 +197,76 @@ router.put("/", async (request, response, next) => {
     next(error);
   }
 });
+
+
+// Server side display/validation
+router.post('/:id/validatevalues', async (request, response, next) => {
+  try {
+    const userId = request.params.id;
+    const user = await User.query().findById(userId);
+    console.log('user information: ', user);
+
+    if (user && request.body) {
+      const updateInformationValues: UserValidationInformation = request.body;
+      let validationResponses: UserValidationResponse;
+
+      console.log('updateInformation: ', updateInformationValues);
+
+      // I don't have intuitive logic in place for handling object values to access different keys based on a specific id and this logic is dummy logic just to build a connection for validations on this side also 
+      if (updateInformationValues.key && updateInformationValues.value) {
+        // name - no numbers
+        if (updateInformationValues.key == 'name') {
+          const noNumbersOrSpecialCharacters = new RegExp('^[a-zA-Z]*$');
+          validationResponses = {
+            ...updateInformationValues,
+            validation: noNumbersOrSpecialCharacters.test(updateInformationValues.value) ? 'valid' : 'invalid'
+          };
+        }
+
+        // phone - this needs to have the proper format
+        if (updateInformationValues.key == 'phone') {
+          const tenDigitNumberValidation = new RegExp('^[0-9]{10}$'); // Actual validations can be handled on the client
+          validationResponses = {
+            ...updateInformationValues,
+            validation: tenDigitNumberValidation.test(updateInformationValues.value) ? 'valid' : 'invalid'
+          };
+        }
+
+        // username - validations and rules for this
+        if (updateInformationValues.key == 'username') {
+          // If username is not already taken
+          const noNumbersOrSpecialCharacters = new RegExp('^[a-zA-Z]*$');
+          validationResponses = {
+            ...updateInformationValues,
+            validation: noNumbersOrSpecialCharacters.test(updateInformationValues.value) ? 'valid' : 'invalid'
+          };
+        }
+
+        // email address - email validations
+        if (updateInformationValues.key == 'email') {
+          validationResponses = {
+            ...updateInformationValues,
+            validation: 'valid'
+          };
+        }
+
+        response.json({ status: 200, validation: validationResponses });
+      }
+      else
+      {
+        response.sendStatus(204);
+      }
+    }
+    else {
+      response.sendStatus(404);
+    }
+
+  } catch(error) {
+    next(error);
+  }
+})
+
+
 
 
 module.exports = router;

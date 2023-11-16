@@ -1,0 +1,27 @@
+<h1 id="user-information" class="mt-24 mb-2 text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl">
+  User Information
+</h1>
+<p class="mt-1 mb-6 text-sm leading-6 text-gray-400">Edit and configure a User's information publicly.</p>
+
+<div class="">
+  <shared-store-tabs 
+    [tabs]="userTabs"
+    (tabPressed)="clickedTab($event)"
+  />
+</div>
+
+<!-- TODO: add nested routes -->
+<shared-store-display-user-information 
+  *ngIf="selectedTab === 'information'" 
+  [user]="user | async"
+/>
+
+<shared-store-add-user-form 
+  [formFactory]="addUserFormFactory"
+  *ngIf="selectedTab === 'add'" 
+/>
+
+<shared-store-update-user-form 
+  [formFactory]="updateUserFormFactory"
+  *ngIf="selectedTab === 'update'" 
+/>

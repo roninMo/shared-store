@@ -62,6 +62,21 @@ export class User extends Model {
 }
 
 
+export interface UserValidationBase { 
+  key: UserKeys, 
+};
+
+export interface UserValidationInformation extends UserValidationBase { 
+  value: string 
+};
+
+export type ValidationStatus = 'valid' | 'hidden' | 'invalid';
+export interface UserValidationResponse extends UserValidationInformation { 
+  validation: ValidationStatus 
+};
+
+export type UserKeys = keyof User;
+
 
 /* 
 

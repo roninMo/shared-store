@@ -1,9 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { ApiService } from "../api.service";
 import { UserActions } from "../users";
 import { catchError, concatMap, map, of } from "rxjs";
-import { Todo, jsonApiRoute_Base } from "@shared-store/utilities";
+import { ApiService, Todo, jsonApiRoute_Base } from "@shared-store/utilities";
 import { TodosActions } from './todos.actions';
 
 @Injectable()

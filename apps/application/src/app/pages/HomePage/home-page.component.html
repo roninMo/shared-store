@@ -33,15 +33,21 @@
       The backend is built in express and uses the base routes with objection for handling a mySql database, and middleware error handling
     </p>
 
-    <shared-store-users-page />
 
     <!-- Get User information -->
-    <h1 id="user-information" class="mt-24 text-2xl font-bold tracking-tight text-slate-200 sm:text-3xl">
-      Access a User's Information
-    </h1>
-    <shared-store-user-information 
+    <shared-store-user-data />
+
+
+
+
+
+
+    <div class="py-24"></div>
+
+
+    <!-- <shared-store-user-information 
       [user]="user | async"
-    />
+    /> -->
 
     <button 
       (click)="printUsers()"

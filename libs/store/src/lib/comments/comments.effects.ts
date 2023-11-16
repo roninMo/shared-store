@@ -2,8 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { catchError, of, concatMap, map } from 'rxjs';
 import { CommentsActions } from './comments.actions';
-import { ApiService } from '../api.service';
-import { Comment, jsonApiRoute_Base } from '@shared-store/utilities';
+import { ApiService, Comment, jsonApiRoute_Base } from '@shared-store/utilities';
 
 @Injectable()
 export class CommentsEffects {

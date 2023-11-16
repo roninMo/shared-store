@@ -17,8 +17,10 @@ export interface AddressForm {
   suite: FormControl<string>;
   city: FormControl<string>;
   zipcode: FormControl<string>;
-  country: FormControl<string>;
-  geo: SubclassedFormGroup<{ lat: FormControl<string>; lng: FormControl<string>; }>;
+  geo: SubclassedFormGroup<{ 
+    lat: FormControl<string>; 
+    lng: FormControl<string>; 
+  }>;
 }
 
 export const generateAddress = (data: Partial<Address> = {}): Address => {
@@ -33,6 +35,7 @@ export const generateAddress = (data: Partial<Address> = {}): Address => {
     },
   };
 
+  console.log('generating address: ', {address, data});
   return Object.assign(address, data);
 };
 

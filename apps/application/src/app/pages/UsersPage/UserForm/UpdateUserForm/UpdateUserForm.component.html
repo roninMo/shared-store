@@ -1,0 +1,166 @@
+<div class="border-b border-white/10 pb-12">
+
+
+  <h2 class="mt-6 text-xl font-semibold leading-7 text-white">{{ userForm.value.name || '' }}</h2>
+
+  <!-- User form -->
+  <!-- Group Object Container -->
+  <h2 class="mt-4 text-base font-semibold leading-7 text-white">Personal Information</h2>
+  <p class="mt-1 text-sm leading-6 text-gray-400">Edit and configure a User's information publicly.</p>
+  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="userForm">
+    <!-- First name -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.name"
+        formControlName="name"
+        autocomplete="given-name"
+        label="Name"
+      />
+    </div>
+
+    <!-- Phone -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.phone"
+        formControlName="phone"
+        autocomplete="tel"
+        label="Phone number"
+      />
+    </div>
+
+    <!-- Username -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.username"
+        formControlName="username"
+        label="Username"
+      />
+    </div>
+
+    <!-- Email address -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.email"
+        formControlName="email"
+        autocomplete="email"
+        label="Email address"
+      />
+    </div>
+  </div>
+
+
+
+
+  <!-- Group Object Address Container -->
+  <h2 class="mt-6 text-base font-semibold leading-7 text-white">Address Information</h2>
+  <p class="mt-1 text-sm leading-6 text-gray-400">Edit the address information.</p>
+  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="addressForm">
+    <!-- Country -->
+    <div class="sm:col-span-5">
+      <shared-store-select
+        [OmitBlankOption]="true"
+        [options]="countries"
+        label="Country"
+      />
+    </div>
+
+    <!-- Street address -->
+    <div class="col-span-full">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.street"
+        formControlName="street"
+        autocomplete="street-address"
+        label="Street address"
+      />
+    </div>
+
+    <!-- Suite -->
+    <div class="sm:col-span-4 sm:col-start-1">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.suite"
+        formControlName="suite"
+        label="Suite"
+      />
+    </div>
+
+    <!-- City -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.city"
+        formControlName="city"
+        label="City"
+      />
+    </div>
+
+    <!-- Postal code -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.zipcode"
+        formControlName="zipcode"
+        autocomplete="postal-code"
+        label="ZIP / Postal code"
+      />
+    </div>
+    
+    <!-- Geo -->
+    <div class="sm:col-span-4" [formGroup]="geoForm">
+      <shared-store-input
+        [control]="userForm.controls.address.controls.geo.controls.lng"
+        formControlName="lng"
+        label="Geo"
+      />
+    </div>
+  </div>
+
+
+
+
+  <!-- Group Object Company Container -->
+  <h2 class="mt-6 text-base font-semibold leading-7 text-white">Company Information</h2>
+  <p class="mt-1 text-sm leading-6 text-gray-400">Add the company information.</p>
+  <div class="mt-4 mb-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8" [formGroup]="companyForm">
+    <!-- Company -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.company.controls.name"
+        formControlName="name"
+        autocomplete="organization"
+        label="Company name"
+      />
+    </div>
+
+    <!-- Catchphrase -->
+    <div class="sm:col-span-4">
+      <shared-store-input
+        [control]="userForm.controls.company.controls.catchPhrase"
+        formControlName="catchPhrase"
+        label="Catch phrase"
+      />
+    </div>
+
+    <!-- About -->
+    <div class="sm:col-span-8">
+      <shared-store-textarea
+        [control]="userForm.controls.company.controls.bs"
+        label="About"
+      />
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  <!-- Create User -->
+  <div class="mt-14 flex items-center justify-end gap-x-6">
+    <shared-store-button
+      (OnClicked)="onFormSubmitted()"
+      [label]="formSubmittedLabel"
+      [disabled]="!userForm.valid"
+    />
+  </div>
+</div>
