@@ -26,13 +26,9 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
       formFactory?: SubclassedFormFactory
   ) {
     super(formState, validatorOrOpts, asyncValidator);
+    this.addBackendValidationSubscription();
     if (formFactory) {
       this.formFactory = formFactory;
-      this.apiSubscription = this.valueChanges.pipe(debounceTime(250)).subscribe(value => {
-        if (this.value && this.valid) {
-          this.formFactory?.updateAndRunBackendValidations(this);
-        }
-      });
     }
     // console.log('constructing form control: ', { formState, validatorOrOpts, asyncValidator });
   }
@@ -65,5 +61,21 @@ export class SubclassedFormControl<TValue = any> extends FormControl {
   override updateValueAndValidity(opts?: { onlySelf?: boolean; emitEvent?: boolean;  }): void {
     super.updateValueAndValidity(opts);
     // console.log('validatorOrOpts', {opts, validator: this.validatorOrOpts});
+  }
+
+  public addBackendValidationSubscription(): void {
+    this.removeBackendValidaitonSubscription();
+    this.apiSubscription = this.valueChanges.pipe().subscribe(value => {
+      console.log('form control value change subscrition: ', { value: this.value, subscriptionValue: value, valid: this.valid });
+      if (this.value && this.valid) {
+        this.formFactory?.updateAndRunBackendValidations(this);
+      }
+    });
+  }
+  
+  public removeBackendValidaitonSubscription(): void {
+    if (this.apiSubscription) {
+      this.apiSubscription.unsubscribe();
+    }
   }
 }

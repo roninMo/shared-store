@@ -9,7 +9,7 @@ import {
 import {
   Countries,
   SubclassedFormBuilder,
-  SubclassedFormFactory,
+  UserFormFactory,
   SubclassedFormGroup,
   User,
   UserForm,
@@ -53,7 +53,7 @@ import { UserDataComponent } from '../UsersPage/UserForm/UserData.component';
 })
 export class HomePageComponent {
   protected readonly destroy: DestroyRef = inject(DestroyRef);
-  userFormFactory: SubclassedFormFactory<UserForm>;
+  userFormFactory: UserFormFactory;
   userForm: SubclassedFormGroup<UserForm>;
   countries: string[] = Countries;
 
@@ -62,7 +62,7 @@ export class HomePageComponent {
   user: Observable<User> | null;
   
   constructor(protected fb: SubclassedFormBuilder, protected httpClient: ApiService, protected store: Store) {
-    this.userFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser));
+    this.userFormFactory = new UserFormFactory(this.destroy, this.fb, httpClient, generateUser(emptyUser));
     this.userForm = this.userFormFactory.subclassedForm;
     console.log('user form: ', this.userForm);
     this.users = store.select(selectUsersEntities).pipe(takeUntilDestroyed());

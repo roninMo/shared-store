@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddressForm, Countries, SubclassedFormFactory, SubclassedFormGroup, UserForm } from '@shared-store/utilities';
+import { AddressForm, Countries, UserFormFactory, SubclassedFormGroup, UserForm } from '@shared-store/utilities';
 import { ButtonComponent, InputComponent, SelectComponent, TextareaComponent } from '@shared-store/components';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -21,7 +21,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class AddUserFormComponent {
   @Input()
-  set formFactory(formFactory: SubclassedFormFactory<UserForm>) {
+  set formFactory(formFactory: UserFormFactory) {
     if (formFactory) {
       this.factory = formFactory;
       this.geoForm = formFactory.form.controls.address.controls.geo;
@@ -35,7 +35,7 @@ export class AddUserFormComponent {
   addressForm!: FormGroup<AddressForm>;
   companyForm!: FormGroup<any>;
   userForm!: FormGroup<UserForm>;
-  factory!: SubclassedFormFactory<UserForm>;
+  factory!: UserFormFactory;
   
   formSubmittedLabel = 'Add User';
   countries: string[] = Countries;

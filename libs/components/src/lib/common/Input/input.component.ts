@@ -71,7 +71,7 @@ export class InputComponent implements ControlValueAccessor {
     // TODO: you should create an event emitter here to capture these events otherwise it's not necessary
     const value = event?.target?.value;
     this.control.markAsTouched({ onlySelf: true });
-    this._value.next(value);
+    // this._value.next(value);
     // if (value) {
     //   console.log('input onBlur: ', value);
     //   this.propagateChange(value);

@@ -8,7 +8,7 @@ import { RouterModule } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TabValue, TabsComponent } from "@shared-store/components";
 import { selectSelectedUser, selectAllUserPosts, ApiService } from "@shared-store/shared-store";
-import { AddressPipe, User, Post, SubclassedFormFactory, UserForm, controlValidation, SubclassedFormBuilder, generateUser, emptyUser, SubclassedFormControl } from "@shared-store/utilities";
+import { AddressPipe, User, Post, UserFormFactory, UserForm, controlValidation, SubclassedFormBuilder, generateUser, emptyUser, SubclassedFormControl } from "@shared-store/utilities";
 import { Observable, take } from "rxjs";
 import { AddUserFormComponent } from "./AddUserForm/AddUserForm.component";
 import { UpdateUserFormComponent } from "./UpdateUserForm/UpdateUserForm.component";
@@ -63,8 +63,8 @@ export class UserDataComponent {
   currentPost = 1;
 
   // Form
-  updateUserFormFactory: SubclassedFormFactory<UserForm>;
-  addUserFormFactory: SubclassedFormFactory<UserForm>;
+  updateUserFormFactory: UserFormFactory;
+  addUserFormFactory: UserFormFactory;
   userFormControlValidations: AbstractControlOptions = {
     validators: [Validators.required, controlValidation],
     asyncValidators: [],
@@ -81,8 +81,8 @@ export class UserDataComponent {
 
   constructor(protected store: Store, protected httpClient: ApiService, protected fb: SubclassedFormBuilder) {
     // Forms
-    this.addUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
-    this.updateUserFormFactory = new SubclassedFormFactory<UserForm>(this.destroy, this.fb, httpClient, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
+    this.addUserFormFactory = new UserFormFactory(this.destroy, this.fb, httpClient, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
+    this.updateUserFormFactory = new UserFormFactory(this.destroy, this.fb, httpClient, generateUser(emptyUser), this.userFormControlValidations, this.userFormGroupValidations);
     this.updateUserFormFactory.form.controls.address.controls.geo.controls.lat.setValidators([]);
     this.updateUserFormFactory.form.controls.address.controls.geo.controls.lng.setValidators([]);
     this.addUserFormFactory.form.controls.address.controls.geo.controls.lat.setValidators([]);

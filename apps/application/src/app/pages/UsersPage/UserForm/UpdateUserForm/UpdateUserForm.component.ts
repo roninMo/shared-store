@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { InputComponent, SelectComponent, TextareaComponent, ButtonComponent } from '@shared-store/components';
-import { SubclassedFormFactory, UserForm, AddressForm, Countries } from '@shared-store/utilities';
+import { UserFormFactory, UserForm, AddressForm, Countries } from '@shared-store/utilities';
 
 @Component({
   selector: 'shared-store-update-user-form',
@@ -21,7 +21,7 @@ import { SubclassedFormFactory, UserForm, AddressForm, Countries } from '@shared
 })
 export class UpdateUserFormComponent {
   @Input()
-  set formFactory(formFactory: SubclassedFormFactory<UserForm>) {
+  set formFactory(formFactory: UserFormFactory) {
     console.log('setting the form factory', formFactory);
     if (formFactory) {
       this.factory = formFactory;
@@ -36,7 +36,7 @@ export class UpdateUserFormComponent {
   addressForm!: FormGroup<AddressForm>;
   companyForm!: FormGroup<any>;
   userForm!: FormGroup<UserForm>;
-  factory!: SubclassedFormFactory<UserForm>;
+  factory!: UserFormFactory;
   
   formSubmittedLabel = 'Add User';
   countries: string[] = Countries;

@@ -7,7 +7,7 @@ import { SubclassedFormBuilder } from "./subclassed-formBuilder";
 import { SubclassedFormGroup } from "./subclassed-formGroup";
 import { SubclassedFormControl } from "./subclassed-formControl";
 import { UserForm, jsonApiRoute_Base } from "..";
-import { take } from "rxjs";
+import { catchError, take } from "rxjs";
 
 
 

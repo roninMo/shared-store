@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Countries, SubclassedFormFactory, SubclassedFormGroup, UserForm } from '@shared-store/utilities';
+import { Countries, UserFormFactory, SubclassedFormGroup, UserForm } from '@shared-store/utilities';
 import {
   ButtonComponent,
   InputComponent,
@@ -28,7 +28,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class UserFormComponent {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
-  @Input() userFormFactory!: SubclassedFormFactory<UserForm>;
+  @Input() userFormFactory!: UserFormFactory;
   @Input() userForm!: SubclassedFormGroup<UserForm>;
   @Input() submitFormLabel = 'Submit Form';
   countries: string[] = Countries;
