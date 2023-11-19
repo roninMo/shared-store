@@ -1,9 +1,8 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
 import { Comment } from '@shared-store/utilities';
 import { CommentsActions } from './comments.actions';
-import { UserActions } from '../users';
 
 // Comments state
 export const COMMENTS_FEATURE_KEY = 'comments';

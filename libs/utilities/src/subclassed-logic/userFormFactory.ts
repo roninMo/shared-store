@@ -2,7 +2,7 @@
 import { DestroyRef } from "@angular/core";
 import { AbstractControlOptions } from "@angular/forms";
 import { ApiService } from "../api.service";
-import { UserValidationInformation, AbstractControlProperties, defaultFormOptions, SubclassedFormFactory } from "./subclassed-form-factory";
+import { UserValidationInformation, defaultFormOptions, SubclassedFormFactory } from "./subclassed-form-factory";
 import { UserForm, Writable, expressApiRoute_Base } from "..";
 import { SubclassedFormBuilder } from "./subclassed-formBuilder";
 import { SubclassedFormGroup } from "./subclassed-formGroup";

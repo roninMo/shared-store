@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Pipe, PipeTransform } from '@angular/core';
 import { Address } from '../models';
 

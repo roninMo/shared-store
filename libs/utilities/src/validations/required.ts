@@ -1,5 +1,4 @@
-import { ValidatorFn, AbstractControl, ValidationErrors, FormGroup } from "@angular/forms";
-import { SubclassedFormGroup } from "../subclassed-logic";
+import { ValidatorFn, AbstractControl, ValidationErrors } from "@angular/forms";
 import { UserForm } from "../models";
 
 

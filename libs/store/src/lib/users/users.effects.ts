@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, inject } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { catchError, of, concatMap, map, tap } from 'rxjs';
+import { catchError, of, concatMap, map } from 'rxjs';
 import { ApiService, User, jsonApiRoute_Base } from '@shared-store/utilities';
 import { UserActions } from '..';
 
