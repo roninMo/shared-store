@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RemoveUserModalComponent } from './RemoveUserModal.component';
+import { ElementRef } from '@angular/core';
 
 describe('RemoveUserModalComponent', () => {
   let component: RemoveUserModalComponent;
@@ -8,6 +9,7 @@ describe('RemoveUserModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RemoveUserModalComponent],
+      providers: [ElementRef],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RemoveUserModalComponent);

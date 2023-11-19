@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormControlsComponent } from './FormControls.component';
+import { ApiService, SubclassedFormBuilder } from '@shared-store/utilities';
 
 describe('FormControlsComponent', () => {
   let component: FormControlsComponent;
@@ -7,7 +9,8 @@ describe('FormControlsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormControlsComponent],
+      imports: [FormControlsComponent, SubclassedFormBuilder, HttpClientTestingModule],
+      providers: [ApiService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormControlsComponent);

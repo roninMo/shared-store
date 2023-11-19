@@ -1,9 +1,7 @@
 export * from './api-routes';
-export * from './models/images/Album';
-export * from './models/images/Photo';
+export { ApiService } from './api.service';
 export * from './models';
 export * from './pipes';
-export * from './validations/index';
 export * from './subclassed-logic';
 export * from './test-setup';
-export * from './api.service';
+export * from './validations';

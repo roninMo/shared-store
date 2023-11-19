@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddUserFormComponent } from './AddUserForm.component';
+import { SubclassedFormFactory } from '@shared-store/utilities';
 
 describe('AddUserFormComponent', () => {
   let component: AddUserFormComponent;
@@ -7,7 +8,7 @@ describe('AddUserFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddUserFormComponent],
+      imports: [AddUserFormComponent, SubclassedFormFactory],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddUserFormComponent);

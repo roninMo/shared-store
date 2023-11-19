@@ -109,7 +109,7 @@ export class SubclassedFormBuilder extends FormBuilder {
 }
 
 
-function isAbstractControlOptions(options: AbstractControlOptions | { [key: string]: any } | null | undefined): options is AbstractControlOptions {
+export function isAbstractControlOptions(options: AbstractControlOptions | { [key: string]: any } | null | undefined): options is AbstractControlOptions {
   return (
     !!options &&
     ((options as AbstractControlOptions).asyncValidators !== undefined ||
@@ -118,7 +118,7 @@ function isAbstractControlOptions(options: AbstractControlOptions | { [key: stri
   );
 }
 
-function isFormFactoryControlOptions(options: FormFactoryControlOptions | { [key: string]: any } | null | undefined): options is FormFactoryControlOptions {
+export function isFormFactoryControlOptions(options: FormFactoryControlOptions | { [key: string]: any } | null | undefined): options is FormFactoryControlOptions {
   return (
     !!options &&
     ((options as FormFactoryControlOptions).asyncValidators !== undefined ||

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UpdateUserFormComponent } from './UpdateUserForm.component';
+import { UserFormFactory } from '@shared-store/utilities';
 
 describe('UpdateUserFormComponent', () => {
   let component: UpdateUserFormComponent;
@@ -7,7 +8,7 @@ describe('UpdateUserFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UpdateUserFormComponent],
+      imports: [UpdateUserFormComponent, UserFormFactory],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UpdateUserFormComponent);

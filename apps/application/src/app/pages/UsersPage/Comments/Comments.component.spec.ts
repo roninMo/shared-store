@@ -1,16 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentComponent } from './Comment.component';
+import { CommentsComponent } from './Comments.component';
+import { Store } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
-describe('CommentComponent', () => {
-  let component: CommentComponent;
-  let fixture: ComponentFixture<CommentComponent>;
+describe('CommentsComponent', () => {
+  let component: CommentsComponent;
+  let fixture: ComponentFixture<CommentsComponent>;
+  let store: Store;
 
   beforeEach(async () => {
+    const initialState = { 
+      users: { loaded: true, error: null, selectedId: 1 },
+      comments: { loaded: true, error: null },  
+    };
+
     await TestBed.configureTestingModule({
-      imports: [CommentComponent],
+      imports: [CommentsComponent],
+      providers: [provideMockStore( { initialState })]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CommentComponent);
+    fixture = TestBed.createComponent(CommentsComponent);
+    store = TestBed.inject(Store);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

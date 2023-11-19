@@ -1,27 +1,35 @@
-import { TestBed } from '@angular/core/testing';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let store: Store;
+
+  const initialState = { 
+    users: { loaded: true, error: null, selectedId: 1 },
+    posts: { loaded: true, error: null },
+    comments: { loaded: true, error: null },  
+    todos: { loaded: true, error: null },
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, NxWelcomeComponent, RouterTestingModule],
+      imports: [AppComponent, RouterTestingModule],
+      providers: [provideMockStore({ initialState })]
     }).compileComponents();
+    
+    fixture = TestBed.createComponent(TestBed);
+    store = TestBed.inject(Store);
   });
 
-  it('should render title', () => {
+  it('should render', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome application'
-    );
-  });
-
-  it(`should have as title 'application'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('application');
+    expect(compiled).toBeTruthy();
   });
 });
