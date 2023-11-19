@@ -2,10 +2,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomePageComponent } from './home-page.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiService, SubclassedFormBuilder } from '@shared-store/utilities';
+import { ApiService, SubclassedFormBuilder, UserFormFactory, emptyUser, generateUser } from '@shared-store/utilities';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { FormBuilder } from '@angular/forms';
+import { createMockUserFormFactory } from '../UsersPage/UserForm/TestUtilities';
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
@@ -13,15 +13,21 @@ describe('HomePageComponent', () => {
   let store: Store;
 
   beforeEach(async () => {
-    const initialState = { users: { loaded: true, error: null, selectedId: 1 } };
-    
+    const initialState = { 
+      users: { loaded: true, error: null, selectedId: 1 },
+    };
+    const mockFormFactory: UserFormFactory = createMockUserFormFactory(generateUser(emptyUser)) as unknown as UserFormFactory;
+
     await TestBed.configureTestingModule({
       imports: [HomePageComponent, HttpClientTestingModule],
-      providers: [ApiService, FormBuilder, provideMockStore({ initialState })]
+      providers: [ApiService, SubclassedFormBuilder, provideMockStore({ initialState })]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePageComponent);
+    store = TestBed.inject(Store);
     component = fixture.componentInstance;
+    component.userFormFactory = mockFormFactory;
+    component.userForm = mockFormFactory.subclassedForm;
     fixture.detectChanges();
   });
 

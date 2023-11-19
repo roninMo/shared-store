@@ -3,8 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserDataComponent } from './UserData.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiService, SubclassedFormBuilder } from '@shared-store/utilities';
+import { ApiService, SubclassedFormBuilder, UserFormFactory, emptyUser, generateUser } from '@shared-store/utilities';
 import { Store } from '@ngrx/store';
+import { createMockUserFormFactory } from './TestUtilities';
+import { of } from 'rxjs';
 
 describe('UserDataComponent', () => {
   let component: UserDataComponent;
@@ -18,6 +20,7 @@ describe('UserDataComponent', () => {
       comments: { loaded: true, error: null },  
       todos: { loaded: true, error: null },
     };
+    const mockFormFactory: UserFormFactory = createMockUserFormFactory(generateUser(emptyUser)) as unknown as UserFormFactory;
 
     await TestBed.configureTestingModule({
       imports: [UserDataComponent, HttpClientTestingModule],
@@ -27,6 +30,9 @@ describe('UserDataComponent', () => {
     fixture = TestBed.createComponent(UserDataComponent);
     store = TestBed.inject(Store);
     component = fixture.componentInstance;
+    component.updateUserFormFactory = mockFormFactory;
+    component.addUserFormFactory = mockFormFactory;
+    component.user = of(generateUser());
     fixture.detectChanges();
   });
 

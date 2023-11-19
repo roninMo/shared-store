@@ -56,7 +56,7 @@ export class SubclassedFormFactory<T extends AbstractControlProperties<T> = any>
       })
   }
 
-  public buildForm(defaultValues: T | any,  controlValidations: AbstractControlOptions, groupValidations: AbstractControlOptions): 
+  public buildForm(defaultValues: T | any, controlValidations: AbstractControlOptions, groupValidations: AbstractControlOptions): 
     SubclassedFormGroup<T> 
   {
     const formValues: any = {};

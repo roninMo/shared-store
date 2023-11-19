@@ -93,6 +93,15 @@
           "codeCoverage": true
         }
       }
+    },
+    "component-test": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/application/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "application:build"
+      }
     }
   }
 }

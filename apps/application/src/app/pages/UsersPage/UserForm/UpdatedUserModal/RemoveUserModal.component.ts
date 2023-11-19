@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { UserActions } from '@shared-store/shared-store';
 import { AddressPipe, User } from '@shared-store/utilities';
-import { UserInformationComponent } from '../UserInformation/UserInformation.component';
 
 @Component({
   selector: 'shared-store-remove-user-modal',
   standalone: true,
   templateUrl: './RemoveUserModal.component.html',
   styleUrls: ['./RemoveUserModal.component.scss'],
-  imports: [CommonModule, UserInformationComponent, AddressPipe],
+  imports: [CommonModule, AddressPipe],
 })
 export class RemoveUserModalComponent {
   @Output() userRemoved: EventEmitter<boolean> = new EventEmitter();
@@ -32,7 +31,7 @@ export class RemoveUserModalComponent {
     }
   }
 
-  constructor(private eRef: ElementRef, protected store: Store) {
+  constructor(protected eRef: ElementRef, protected store: Store) {
     console.log('constructing the modal');
     this.validToHideModal = false;
     setTimeout(() => {

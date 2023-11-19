@@ -9,8 +9,8 @@ describe('FormControlsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormControlsComponent, SubclassedFormBuilder, HttpClientTestingModule],
-      providers: [ApiService]
+      imports: [FormControlsComponent, HttpClientTestingModule],
+      providers: [ApiService, SubclassedFormBuilder]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormControlsComponent);

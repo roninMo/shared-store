@@ -22,8 +22,6 @@ describe('AppComponent', () => {
       providers: [provideMockStore({ initialState })]
     }).compileComponents();
     
-    fixture = TestBed.createComponent(TestBed);
-    store = TestBed.inject(Store);
   });
 
   it('should render', () => {

@@ -6,33 +6,14 @@ import {
   SelectComponent,
   ButtonComponent,
 } from '@shared-store/components';
-import {
-  Countries,
-  SubclassedFormBuilder,
-  UserFormFactory,
-  SubclassedFormGroup,
-  User,
-  UserForm,
-  emptyUser,
-  generateUser,
-  ApiService,
-} from '@shared-store/utilities';
 import { UsersPageComponent } from '../UsersPage/users-page.component';
-import {
-  AbstractControlOptions,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
 import { UserFormComponent } from '../UsersPage/UserForm/UserForm/user-form.component';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import {
-  selectSelectedUser,
-  selectUsersEntities,
-} from '@shared-store/shared-store';
 import { Dictionary } from '@ngrx/entity';
+import { ApiService, SubclassedFormBuilder, SubclassedFormGroup, User, UserForm, UserFormFactory, emptyUser, generateUser } from '@shared-store/utilities';
+import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { selectUsersEntities, selectSelectedUser } from '@shared-store/shared-store';
 import { UserDataComponent } from '../UsersPage/UserForm/UserData.component';
 
 @Component({
@@ -48,14 +29,13 @@ import { UserDataComponent } from '../UsersPage/UserForm/UserData.component';
     SelectComponent,
     ButtonComponent,
     UserFormComponent,
-    UserDataComponent
+    UserDataComponent,
   ],
 })
 export class HomePageComponent {
   protected readonly destroy: DestroyRef = inject(DestroyRef);
   userFormFactory: UserFormFactory;
   userForm: SubclassedFormGroup<UserForm>;
-  countries: string[] = Countries;
 
   // random warm up logic
   users: Observable<Dictionary<User>>;
