@@ -1,3 +1,4 @@
+# https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial#warm-up
 trigger:
   - main
 pr:
