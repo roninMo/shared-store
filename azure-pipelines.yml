@@ -26,7 +26,10 @@ jobs:
       # Required for nx affected if we're on a branch
       - script: git branch --track main origin/main
       - script: npm ci
-      - script: npx nx run-many -t lint test build -p application
+      #- script: npx nx run-many -t lint test build -p application
+      - script: npx nx run application:lint
+      - script: npx nx run application:test
+      - script: npx nx run application:build
 
       - task: PublishBuildArtifacts@1
         inputs:
