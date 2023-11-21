@@ -1,0 +1,41 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: 
+    npm ci
+    npx nx run application:lint
+    npx nx run application:test
+    npx nx run backend:lint
+    npx nx run backend:test
+  displayName: 'npm install and test'
+  
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(b770253e-d3fe-410b-bd01-61579d2db660)'
+    appType: 'webApp'
+    appName: 'Express-Shared-Store'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    appSettings: '-Port 3333'
+    deploymentMethod: 'auto'
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_build_command: 'npx nx run application:build'
+    output_location: '$(System.DefaultWorkingDirectory)/dist/apps/application'
+    skip_api_build: true
+    verbose: true
+    # api_build_command: 
