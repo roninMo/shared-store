@@ -6,7 +6,7 @@ export const dbConfig = {
   user: 'remoterole',
   // password: process.env.PASSWORD,
   password: 'admin',
-  database: 'userInformation',
+  database: 'usersdatabase',
 };
 
 export const knexConfig = {
